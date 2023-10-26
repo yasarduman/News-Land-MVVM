@@ -57,6 +57,8 @@
 		83A104B52AEA959800329B09 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A1045A2AEA91AE00329B09 /* LoginVC.swift */; };
 		83A104B62AEA959C00329B09 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A104592AEA91AE00329B09 /* RegisterVC.swift */; };
 		83A104B72AEA95A000329B09 /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A1045B2AEA91AE00329B09 /* ForgotPasswordVC.swift */; };
+		83A104BA2AEAA5A200329B09 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A104B92AEAA5A200329B09 /* NetworkManager.swift */; };
+		83A104BE2AEAA6C900329B09 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A104BD2AEAA6C900329B09 /* NewsModel.swift */; };
 		83F2FC202AE04E1B00006EBE /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F2FC1F2AE04E1B00006EBE /* HomeVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -110,6 +112,8 @@
 		83A1049A2AEA93C600329B09 /* NewsBodyLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsBodyLabel.swift; sourceTree = "<group>"; };
 		83A1049B2AEA93C600329B09 /* NewsSecondaryTitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsSecondaryTitleLabel.swift; sourceTree = "<group>"; };
 		83A104A02AEA93E700329B09 /* UserContactCardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserContactCardVC.swift; sourceTree = "<group>"; };
+		83A104B92AEAA5A200329B09 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		83A104BD2AEAA6C900329B09 /* NewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		83F2FC1F2AE04E1B00006EBE /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -199,6 +203,7 @@
 		8339A9522ADC106B006000AE /* NewAppAdvanced */ = {
 			isa = PBXGroup;
 			children = (
+				83A104B82AEAA57000329B09 /* Manager */,
 				83A285082ADE6F4E00143E68 /* Extensions */,
 				83A285092ADE6F8100143E68 /* Screens */,
 				83A2850A2ADE6F8800143E68 /* Model */,
@@ -292,6 +297,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		83A104B82AEAA57000329B09 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				83A104B92AEAA5A200329B09 /* NetworkManager.swift */,
+				83A104BD2AEAA6C900329B09 /* NewsModel.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		83A285082ADE6F4E00143E68 /* Extensions */ = {
@@ -488,9 +502,11 @@
 				587927662AE93F1C00A27E98 /* NewsTabBarController.swift in Sources */,
 				83A104B52AEA959800329B09 /* LoginVC.swift in Sources */,
 				833566E32ADE95E600825B84 /* NewsAlertContainerView.swift in Sources */,
+				83A104BE2AEAA6C900329B09 /* NewsModel.swift in Sources */,
 				83A1046B2AEA927200329B09 /* ProfileVM.swift in Sources */,
 				83A1047A2AEA92D300329B09 /* Constants.swift in Sources */,
 				83A1049C2AEA93C600329B09 /* NewsTitleLabel.swift in Sources */,
+				83A104BA2AEAA5A200329B09 /* NetworkManager.swift in Sources */,
 				83A1047C2AEA92D300329B09 /* CustomActivityIndicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

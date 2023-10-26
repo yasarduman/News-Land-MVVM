@@ -22,6 +22,9 @@ class HomeVC: UIViewController {
     
     let tableView = UITableView()
     
+    var newsArr : [News] = []
+    
+    var newsUrlImage : UIImage? = nil
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -33,9 +36,40 @@ class HomeVC: UIViewController {
     
     //MARK: - Helper Functions
     private func configureUI() {
+        
+        Task{
+            do {
+                let getNewsResponse = try await NetworkManager.shared.getNews()
+                dump(getNewsResponse)
+
+                updateUI(with: getNewsResponse.articles)
+            } catch {
+                if let newsError = error as? NewsError {
+                    print("Error Veri Çekerken" + newsError.rawValue)
+                }else {
+                    self.presentDefualtError()
+                }
+              
+            }
+        }
+        
+      
+        
         configureNavigationBar()
         configureCarouselView()
         configureTableView()
+    }
+    
+    private func updateUI(with news: [News]){
+        newsArr = news
+
+        tableView.reloadData()
+    }
+    private func downloadImage(fromURL url: String){
+        Task {
+            newsUrlImage = await NetworkManager.shared.downloadImage(from: url) ?? UIImage(systemName: "house")
+        }
+      
     }
     
     private func configureNavigationBar() {
@@ -87,13 +121,21 @@ class HomeVC: UIViewController {
 
 extension HomeVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return newsArr.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.reuseID,
                                                  for: indexPath) as! HomeTableViewCell
         cell.selectionStyle = .none
+        if let title = newsArr[indexPath.row].title {
+            cell.titleLabelText = title
+        }
+
+      
+      
+        
+        
         return cell
     }
 

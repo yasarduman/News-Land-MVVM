@@ -5,6 +5,7 @@ class CustomTabBar: UITabBar {
 
     override func draw(_ rect: CGRect) {
         addShadow()
+        
     }
 
     private func addShadow() {
@@ -28,4 +29,8 @@ class CustomTabBar: UITabBar {
         sizeThatFits.height = 100.0  // Örnek olarak 100 piksel
         return sizeThatFits
     }
+}
+
+#Preview{
+    NewsTabBarController()
 }
