@@ -37,6 +37,9 @@ class NewsButton: UIButton {
         configuration = .tinted()
         configuration?.cornerStyle = .medium
         translatesAutoresizingMaskIntoConstraints = false
+        
+    
+
     }
     
     func set(bgColor: UIColor ,color: UIColor, title: String, fontSize: FontSize, systemImageName: String?) {

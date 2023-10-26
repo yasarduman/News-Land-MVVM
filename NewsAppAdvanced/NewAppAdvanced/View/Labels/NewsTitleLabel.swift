@@ -22,11 +22,11 @@ class NewsTitleLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
+    convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat, fontWeight: UIFont.Weight? = .bold) {
         self.init(frame: .zero)
         
         self.textAlignment = textAlignment
-        self.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
+        self.font = UIFont.systemFont(ofSize: fontSize, weight: fontWeight!)
     }
     
     // MARK: - Configuration

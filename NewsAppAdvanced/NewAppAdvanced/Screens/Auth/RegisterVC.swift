@@ -4,13 +4,12 @@
 //
 //  Created by Yaşar Duman on 18.10.2023.
 //
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
 
 import UIKit
+import FirebaseAuth
 
 class RegisterVC: UIViewController {
-
+    // MARK: - Properties
     private let HeadLabel            = NewsTitleLabel(textAlignment: .left, fontSize: 20)
     private let userNameTextField    = CustomTextField(fieldType: .username)
     private let emailTextField       = CustomTextField(fieldType: .email)
@@ -21,7 +20,9 @@ class RegisterVC: UIViewController {
     private let signInButton         = NewsButton( bgColor:.clear ,color: .label, title: "Sign In.", fontSize: .small)
     
     private let stackView            = UIStackView()
+    private let authVM : AuthVM?     = AuthVM()
     
+    // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,7 +45,6 @@ class RegisterVC: UIViewController {
         
         HeadLabel.anchor(top: view.topAnchor,
                          leading: view.leadingAnchor,
-                         //trailing: view.trailingAnchor,
                          padding: .init(top: 80, left: 20, bottom: 0, right: 0)
         )
     }
@@ -98,7 +98,7 @@ class RegisterVC: UIViewController {
                             padding: .init(top: 20, left: 20, bottom: 0, right: 20),
                             size: .init(width: 0, height: 50)
         )
-        
+        signUpButton.addTarget(self, action: #selector(didTapSignUp), for: .touchUpInside)
        
     }
     
@@ -125,40 +125,64 @@ class RegisterVC: UIViewController {
     // MARK: - Action
     @objc private func didTapSignUp() {
         //Email & Password Validation
-        if let email = emailTextField.text, let password = passwordTextField.text, let rePassword = repasswordTextField.text {
-            if email == "" && password == "" {
-                presentNewsAlert(title: "Alert!", message: "Please Enter Email And Password", buttonTitle: "Ok")
-            } else {
-                if !email.isValidEmail(email: email){
-                    presentNewsAlert(title: "Alert!", message: "Invalide Email Address", buttonTitle: "Ok")
-                } else if !password.isValidPassword(password: password){
-
-                    if password.count <= 6 {
-                        presentNewsAlert(title: "Alert!", message: "Password must be at least 8 characters", buttonTitle: "Ok")
-                    }
-                    if !password.containsDigits(password){
-                        presentNewsAlert(title: "Alert!", message: "Password must contain at least 1 digit", buttonTitle: "Ok")
-                    }
-                    
-                    if !password.containsLowerCase(password){
-                        presentNewsAlert(title: "Alert!", message: "Password must contain at least 1 lowercase character", buttonTitle: "Ok")
-                    }
-                    
-                    if !password.containsUpperCase(password){
-                        presentNewsAlert(title: "Alert!", message: "Password must contain at least 1 uppercase character", buttonTitle: "Ok")
-                    }
-                    
-                    if password != rePassword {
-                        presentNewsAlert(title: "Alert!", message: "Password and password repeat are not the same", buttonTitle: "Ok")
-                    }
-
-                } else {
-                    //navigation
-                    presentNewsAlert(title: "Alert!", message: "Succsses 🥳", buttonTitle: "Ok")
-                }
+        
+        //Email & Password Validation
+        
+        guard let userName = userNameTextField.text,
+              let email = emailTextField.text,
+              let password = passwordTextField.text,
+              let rePassword = repasswordTextField.text else{
+            presentNewsAlert(title: "Alert!", message: "Username, email, password, rePassword ?", buttonTitle: "Ok")
+            return
+        }
+        guard email.isValidEmail(email: email) else {
+            presentNewsAlert(title: "Alert!", message: "Email Invalid", buttonTitle: "Ok")
+            return
+        }
+        
+        guard password.isValidPassword(password: password) else {
+            
+            guard password.count >= 6 else {
+                presentNewsAlert(title: "Alert!", message: "Password must be at least 6 characters", buttonTitle: "Ok")
+                return
             }
             
+            guard password.containsDigits(password) else {
+                presentNewsAlert(title: "Alert!", message: "Password must contain at least 1 digit", buttonTitle: "Ok")
+                return
+            }
+            
+            guard password.containsLowerCase(password) else {
+                presentNewsAlert(title: "Alert!", message: "Password must contain at least 1 lowercase character", buttonTitle: "Ok")
+                return
+            }
+            
+            guard password.containsUpperCase(password) else {
+                presentNewsAlert(title: "Alert!", message: "Password must contain at least 1 uppercase character", buttonTitle: "Ok")
+                return
+            }
+        
+            
+            guard password == rePassword else {
+                presentNewsAlert(title: "Alert!", message: "Password and password repeat are not the same", buttonTitle: "Ok")
+                return
+            }
+       
+            
+        return
         }
+        
+  
+        authVM?.register(userName: userName, email: email, password: password) { [weak self] success, error in
+            guard let self = self else { return }
+
+            if success {
+                self.presentNewsAlert(title: "Alert!", message: "Succsses 🥳", buttonTitle: "Ok")
+            } else {
+                self.presentNewsAlert(title: "Alert!", message: "hataaaa", buttonTitle: "Ok")
+            }
+        }
+        
     }
     
     @objc private func didTapSignIn() {
@@ -170,7 +194,7 @@ class RegisterVC: UIViewController {
 
 }
 
-#Preview(traits: .defaultLayout, body: {
-    return RegisterVC()
-})
-#endif
+
+#Preview{
+    RegisterVC()
+}
