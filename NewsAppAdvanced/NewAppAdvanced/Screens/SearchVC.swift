@@ -8,9 +8,17 @@
 import UIKit
 
 class SearchVC: UIViewController {
+    
+//    let searchBar = UISearchBar()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
+        
+//        setupUI()
     }
+    
+//    func setupUI() {
+//        view.addSubview(searchBar)
+//    }
 }

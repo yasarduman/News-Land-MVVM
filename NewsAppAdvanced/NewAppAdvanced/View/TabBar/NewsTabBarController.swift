@@ -17,15 +17,20 @@ class NewsTabBarController: UITabBarController, UITabBarControllerDelegate {
          self.setValue(customTabBar, forKey: "tabBar")
          
         // Tab bar arka plan rengini beyaz yapın
-          UITabBar.appearance().backgroundColor = .white
+        UITabBar.appearance().backgroundColor = .clear
 
           // Seçili olan öğelerin rengini turuncu yapın
         UITabBar.appearance().tintColor = NewsColor.purple1
        
           // Seçilmeyen öğelerin rengini gri yapın
-        UITabBar.appearance().unselectedItemTintColor = NewsColor.black
+        UITabBar.appearance().unselectedItemTintColor = .label
         
-        viewControllers = [createHomeNC(), createSearchNC(), createFavoritesNC()]
+        viewControllers = [
+            createHomeNC(),
+            createSearchNC(),
+            createFavoritesNC(),
+            createProfileNC()
+        ]
        
     }
     // MARK: - Home Navigation Controller 🏠
@@ -59,7 +64,6 @@ class NewsTabBarController: UITabBarController, UITabBarControllerDelegate {
     // MARK: - Favorites Navigation Controller ⭐️
     func createFavoritesNC() -> UINavigationController {
         let favoritesVC        = FavoritesVC()
-        favoritesVC.title      = "Favorites"
         
         favoritesVC.tabBarItem = UITabBarItem(title: "Favorites",
                                            image: UIImage(systemName: "bookmark"),
@@ -69,18 +73,16 @@ class NewsTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
     
+//     MARK: - Profile Navigation Controller ⚙️
+        func createProfileNC() -> UINavigationController {
+            let profileVC        = ProfileVC()
     
-//     MARK: - Settings Navigation Controller ⚙️
-//        func createSettingsNC() -> UINavigationController {
-//            let profileVC        = ProfileVC()
-//    
-//            profileVC.tabBarItem = UITabBarItem(title: "Profile",
-//                                               image: UIImage(systemName: "person.crop.circle"),
-//                                               tag: 3)
-//    
-//            return UINavigationController(rootViewController: profileVC)
-//        }
+            profileVC.tabBarItem = UITabBarItem(title: "Profile",
+                                               image: UIImage(systemName: "person.crop.circle"),
+                                               tag: 3)
     
+            return UINavigationController(rootViewController: profileVC)
+        }
     
 }
 

@@ -35,7 +35,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
         } else {
             let loginVC = LoginVC()
-            let nav = UINavigationController(rootViewController: loginVC)
+            let nav = UINavigationController(rootViewController: NewsTabBarController())
             nav.modalPresentationStyle = .fullScreen
             window?.rootViewController = nav
         }
