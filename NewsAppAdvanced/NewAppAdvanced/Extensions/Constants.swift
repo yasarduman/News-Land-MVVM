@@ -12,8 +12,9 @@ enum NewsColor {
     static let purple1                    = UIColor(red: 0.49, green: 0.34, blue: 0.76, alpha: 1.00)
     static let purple2                    = UIColor(red: 0.69, green: 0.51, blue: 0.99, alpha: 1.00)
     static let purple3                    = UIColor(red: 0.88, green: 0.81, blue: 1.00, alpha: 1.00)
+    static let backButtonColor            = UIColor(red: 0.43, green: 0.43, blue: 0.43, alpha: 1.00)
+    static let goldTexxtColor             = UIColor(red: 1.00, green: 0.82, blue: 0.24, alpha: 1.00)
     static let black                      = UIColor(red: 0, green: 0, blue: 0, alpha: 1.00)
-
 }
 
 

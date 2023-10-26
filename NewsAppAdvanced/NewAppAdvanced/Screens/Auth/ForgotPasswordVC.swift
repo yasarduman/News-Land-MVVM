@@ -8,15 +8,17 @@
 import UIKit
 
 class ForgotPasswordVC: UIViewController {
-    
+    // MARK: - Properties
     private let HeadLabel            = NewsTitleLabel(textAlignment: .left, fontSize: 20)
-    private let emailTextField    = CustomTextField(fieldType: .email)
-    private let forgotPasswordButton         = NewsButton( bgColor:NewsColor.purple1 ,color: NewsColor.purple1, title: "Submit", fontSize: .big)
+    private let emailTextField       = CustomTextField(fieldType: .email)
+    private let forgotPasswordButton = NewsButton( bgColor:NewsColor.purple1 ,color: NewsColor.purple1, title: "Submit", fontSize: .big)
     private let infoLabel            = NewsSecondaryTitleLabel(fontSize: 16)
     private let signInButton         = NewsButton( bgColor:.clear ,color: .label, title: "Sign In.", fontSize: .small)
     
     private let stackView            = UIStackView()
+    private let authVM : AuthVM?     = AuthVM()
     
+    // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,7 +40,7 @@ class ForgotPasswordVC: UIViewController {
     }
     
     private func configureHeadLabel() {
-        HeadLabel.text = "Create an account"
+        HeadLabel.text = "Forgot Password"
         
         HeadLabel.anchor(top: view.topAnchor,
                          leading: view.leadingAnchor,
@@ -92,19 +94,27 @@ class ForgotPasswordVC: UIViewController {
     // MARK: - Actions
     @objc func didTapForgotPassword(){
         //Email & Password Validation
-        if let email = emailTextField.text {
-            if email == ""  {
-                presentNewsAlert(title: "Alert!", message: "Please Enter Email Address", buttonTitle: "Ok")
-            } else {
-                if !email.isValidEmail(email: email){
-                    presentNewsAlert(title: "Alert!", message: "Invalide Email Address", buttonTitle: "Ok")
-                } else {
-                    //navigation
-                    presentNewsAlert(title: "Alert!", message: "Succsses 🥳", buttonTitle: "Ok")
-                }
-            }
-            
+        
+        guard let email = emailTextField.text else {
+            return
         }
+        
+        guard email.isValidEmail(email: email) else {
+            presentNewsAlert(title: "Alert!", message: "Invalide Email Address", buttonTitle: "Ok")
+            return
+        }
+        
+        authVM?.resetPassword(email: email) { [weak self] success, error in
+            guard let self = self else { return }
+
+            if success {
+                self.presentNewsAlert(title: "Alert!", message: "Succsses 🥳", buttonTitle: "Ok")
+            } else {
+                self.presentNewsAlert(title: "Alert!", message: error, buttonTitle: "Ok")
+            }
+        }
+        
+        
     }
     
     @objc private func didTapSignIn() {

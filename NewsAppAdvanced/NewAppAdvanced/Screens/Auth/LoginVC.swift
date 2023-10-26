@@ -5,14 +5,13 @@
 //  Created by Yaşar Duman on 15.10.2023.
 //
 
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
 
 
 import UIKit
+import Firebase
 
 class LoginVC: UIViewController {
-    
+    // MARK: - Properties
     private let HeadLabel            = NewsTitleLabel(textAlignment: .left, fontSize: 20)
     private let emailTextField       = CustomTextField(fieldType: .email)
     private let passwordTextField    = CustomTextField(fieldType: .password)
@@ -22,8 +21,8 @@ class LoginVC: UIViewController {
     private let forgotPasswordButton = NewsButton( bgColor:.clear ,color: NewsColor.purple1, title: "Forgot password?", fontSize: .small)
     
     private let stackView            = UIStackView()
-    
-
+    private let authVM : AuthVM?     = AuthVM()
+    // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -112,38 +111,58 @@ class LoginVC: UIViewController {
     
     @objc private func didTapSignIn() {
         //Email & Password Validation
-        if let email = emailTextField.text, let password = passwordTextField.text {
-            if email == "" && password == "" {
-                presentNewsAlert(title: "Alert!", message: "Please Enter Email And Password", buttonTitle: "Ok")
-            } else {
-                if !email.isValidEmail(email: email){
-                    presentNewsAlert(title: "Alert!", message: "Invalide Email Address", buttonTitle: "Ok")
-                } else if !password.isValidPassword(password: password){
-
-                    if password.count <= 6 {
-                        presentNewsAlert(title: "Alert!", message: "Password must be at least 8 characters", buttonTitle: "Ok")
-                    }
-                    if !password.containsDigits(password){
-                        presentNewsAlert(title: "Alert!", message: "Password must contain at least 1 digit", buttonTitle: "Ok")
-                    }
-                    
-                    if !password.containsLowerCase(password){
-                        presentNewsAlert(title: "Alert!", message: "Password must contain at least 1 lowercase character", buttonTitle: "Ok")
-                    }
-                    
-                    if !password.containsUpperCase(password){
-                        presentNewsAlert(title: "Alert!", message: "Password must contain at least 1 uppercase character", buttonTitle: "Ok")
-                    }
-
-                } else {
-                    //navigation
-                    presentNewsAlert(title: "Alert!", message: "Succsses 🥳", buttonTitle: "Ok")
-                }
+        
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text else{
+            presentNewsAlert(title: "Alert!", message: "Email and Password ?", buttonTitle: "Ok")
+            return
+        }
+        guard email.isValidEmail(email: email) else {
+            presentNewsAlert(title: "Alert!", message: "Email Invalid", buttonTitle: "Ok")
+            return
+        }
+        
+        guard password.isValidPassword(password: password) else {
+            
+            guard password.count >= 6 else {
+                presentNewsAlert(title: "Alert!", message: "Password must be at least 6 characters", buttonTitle: "Ok")
+                return
             }
             
+            guard password.containsDigits(password) else {
+                presentNewsAlert(title: "Alert!", message: "Password must contain at least 1 digit", buttonTitle: "Ok")
+                return
+            }
+            
+            guard password.containsLowerCase(password) else {
+                presentNewsAlert(title: "Alert!", message: "Password must contain at least 1 lowercase character", buttonTitle: "Ok")
+                return
+            }
+            
+            guard password.containsUpperCase(password) else {
+                presentNewsAlert(title: "Alert!", message: "Password must contain at least 1 uppercase character", buttonTitle: "Ok")
+                return
+            }
+         
+            
+            return
         }
+        
+        authVM?.login(email: email, password: password) { [weak self]  success, error in
+            guard let self = self else { return }
 
+            if success {
+                self.presentNewsAlert(title: "Alert!", message: "Succsses 🥳", buttonTitle: "Ok")
+            } else {
+                self.presentNewsAlert(title: "Alert!", message: error, buttonTitle: "Ok")
+            }
+        }
+        
+        
+        
     }
+    
+ // MARK: - ACTİON
     @objc private func didTapNewUser() {
         let vc = RegisterVC()
         self.navigationController?.pushViewController(vc, animated: true)
@@ -159,7 +178,7 @@ class LoginVC: UIViewController {
 }
 
 
-#Preview(traits: .defaultLayout, body: {
+#Preview{
     return LoginVC()
-})
-#endif
+}
+
