@@ -12,8 +12,9 @@ class HomeTableViewCell: UITableViewCell {
     //MARK: - Variables
     static let reuseID = "HomeTableViewCell"
     
+    var news : News? = nil
     
-    //MARK: - UI Elements
+    //MARK: - UI Elementsw
     lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .secondarySystemBackground
@@ -29,7 +30,6 @@ class HomeTableViewCell: UITableViewCell {
     
     lazy var newsImageView: UIImageView = {
         let imageView = UIImageView()
-      
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.layer.maskedCorners = [
@@ -47,28 +47,15 @@ class HomeTableViewCell: UITableViewCell {
         return label
     }()
     
-  
-    
     lazy var titleLabel: UILabel = {
         let label = NewsTitleLabel(textAlignment: .natural, fontSize: 16)
         label.textColor = .label
-    
+        
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 3
         return label
     }()
     
-    var titleLabelText = ""{
-        willSet{
-            self.titleLabel.text = newValue
-        }
-    }
-    
-    var newsImage : UIImageView? = nil{
-        willSet{
-            self.newsImageView.image = newValue?.image
-        }
-    }
     
     //MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -88,9 +75,6 @@ class HomeTableViewCell: UITableViewCell {
         configureLabels()
     }
     
-    
-    
-    
     private func configureContainerView() {
         contentView.addSubview(containerView)
         containerView.anchor(top: contentView.topAnchor,
@@ -101,7 +85,7 @@ class HomeTableViewCell: UITableViewCell {
                                                    left: 10,
                                                    bottom: 10,
                                                    right: 10))
-
+        
     }
     
     private func configureImageView() {
@@ -116,7 +100,7 @@ class HomeTableViewCell: UITableViewCell {
         containerView.addSubviewsExt(titleLabel,timeSincePostLabel)
         
         titleLabel.anchor(top: containerView.topAnchor,
-                        leading: newsImageView.trailingAnchor,
+                          leading: newsImageView.trailingAnchor,
                           trailing: containerView.trailingAnchor,
                           padding: UIEdgeInsets(top: 10,
                                                 left: 10,
@@ -131,18 +115,7 @@ class HomeTableViewCell: UITableViewCell {
                                                         bottom: 10,
                                                         right: 0))
     }
-    
-    private func downloadImage(fromURL url: String){
-        Task {
-            newsUrlImage = await NetworkManager.shared.downloadImage(from: url) ?? UIImage(systemName: "house")
-        }
-      
-    }
-    
-    
-    
-    
-    
+
     
 }
 

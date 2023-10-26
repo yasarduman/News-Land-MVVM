@@ -24,7 +24,6 @@ class NewsCarouselViewCell: UICollectionViewCell {
         label.textColor = .white
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.text = "These robot hands can be controlled from anywhere in the world"
         return label
     }()
     
@@ -33,7 +32,7 @@ class NewsCarouselViewCell: UICollectionViewCell {
         label.textColor = .white
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 1
-        label.text = "Technology"
+        label.text = "Kategori"
         return label
     }()
     
@@ -41,7 +40,7 @@ class NewsCarouselViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         addSubview(imageView)
-        imageView.image = UIImage(named: "robot")!
+        imageView.image = UIImage(systemName: "x.circle")
         imageView.anchor(top: topAnchor,
                          leading: leadingAnchor,
                          bottom: bottomAnchor,

@@ -26,7 +26,7 @@ class NewsCarouselView: UIView {
     
     lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
-        pageControl.numberOfPages = 10
+        pageControl.numberOfPages = 0
         pageControl.currentPage = 0
         pageControl.tintColor = .red
         pageControl.pageIndicatorTintColor = .gray
@@ -34,18 +34,46 @@ class NewsCarouselView: UIView {
         return pageControl
     }()
     
+    //MARK: - Variables
+    
+    var news: [News]? = nil {
+        willSet {
+            collectionView.reloadData()
+            pageControl.numberOfPages = newValue!.count
+        }
+    }
+    
+    let pageControlHeight: CGFloat = 20
+    
+    
+    //MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        
-        let pageControlHeight: CGFloat = 20
-        
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    //MARK: - Helper Functions
+    
+    private func configureUI() {
+        configureCollectionView()
+        configurePageControl()
+    }
+    
+    private func configureCollectionView() {
         addSubview(collectionView)
         collectionView.anchor(top: topAnchor,
                               leading: leadingAnchor,
                               trailing: trailingAnchor)
         collectionView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -pageControlHeight).isActive = true
-        
+    }
+    
+    private func configurePageControl() {
         addSubview(pageControl)
         pageControl.anchor(top: collectionView.bottomAnchor,
                            leading: self.leadingAnchor,
@@ -54,11 +82,6 @@ class NewsCarouselView: UIView {
         pageControl.addTarget(self, action: #selector(pageControlValueChanged), for: .valueChanged)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    //MARK: - Helper Functions
     @objc func pageControlValueChanged() {
         let selectedPage = pageControl.currentPage
         let indexPath = IndexPath(item: selectedPage, section: 0)
@@ -69,11 +92,34 @@ class NewsCarouselView: UIView {
 
 extension NewsCarouselView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return news?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsCarouselViewCell.reuseID, for: indexPath) as! NewsCarouselViewCell
+        
+        if let news = news {
+            let news = news[indexPath.row]
+            
+            if let url = news.urlToImage {
+                Task {
+                    cell.imageView.image = await NetworkManager.shared.downloadImage(from: url)
+                }
+            }
+            
+            if let source = news.source {
+                if let sourceName = source.name {
+                    cell.categoryLabel.text = sourceName
+                }
+            }
+            
+            if let title = news.title {
+                cell.titleLabel.text = title
+            }
+            
+            
+        }
+        
         
         return cell
     }

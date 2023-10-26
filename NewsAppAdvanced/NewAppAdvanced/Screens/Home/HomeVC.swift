@@ -24,8 +24,6 @@ class HomeVC: UIViewController {
     
     var newsArr : [News] = []
     
-    var newsUrlImage : UIImage? = nil
-    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +38,6 @@ class HomeVC: UIViewController {
         Task{
             do {
                 let getNewsResponse = try await NetworkManager.shared.getNews()
-                dump(getNewsResponse)
-
                 updateUI(with: getNewsResponse.articles)
             } catch {
                 if let newsError = error as? NewsError {
@@ -49,11 +45,9 @@ class HomeVC: UIViewController {
                 }else {
                     self.presentDefualtError()
                 }
-              
+                
             }
         }
-        
-      
         
         configureNavigationBar()
         configureCarouselView()
@@ -62,14 +56,10 @@ class HomeVC: UIViewController {
     
     private func updateUI(with news: [News]){
         newsArr = news
-
+        
+        carousel.news = news
+        
         tableView.reloadData()
-    }
-    private func downloadImage(fromURL url: String){
-        Task {
-            newsUrlImage = await NetworkManager.shared.downloadImage(from: url) ?? UIImage(systemName: "house")
-        }
-      
     }
     
     private func configureNavigationBar() {
@@ -120,22 +110,28 @@ class HomeVC: UIViewController {
 }
 
 extension HomeVC: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return newsArr.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.reuseID,
                                                  for: indexPath) as! HomeTableViewCell
         cell.selectionStyle = .none
-        if let title = newsArr[indexPath.row].title {
-            cell.titleLabelText = title
+        
+        let news = newsArr[indexPath.row]
+        
+        if let title = news.title {
+            cell.titleLabel.text = title
+        }
+        
+        if let imageURL = news.urlToImage {
+            Task {
+                cell.newsImageView.image = await NetworkManager.shared.downloadImage(from: imageURL)
+            }
         }
 
-      
-      
-        
-        
         return cell
     }
 
@@ -143,7 +139,6 @@ extension HomeVC: UITableViewDataSource {
 }
 
 extension HomeVC: UITableViewDelegate {
-
 }
 
 #Preview {

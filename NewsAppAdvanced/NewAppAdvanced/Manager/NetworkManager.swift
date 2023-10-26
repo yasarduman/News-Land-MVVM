@@ -22,7 +22,7 @@ class NetworkManager {
     
     // MARK: - Fetch Followers
     func getNews() async throws -> NewsModel {
-        let endpoint =  "https://newsapi.org/v2/top-headlines?country=tr&apiKey=774527d9f9134f4fbb4032bec7f77007"
+        let endpoint =  "https://newsapi.org/v2/top-headlines?country=us&apiKey=774527d9f9134f4fbb4032bec7f77007"
         
         guard let url = URL(string: endpoint) else {
             throw NewsError.invalidUrl
@@ -58,6 +58,5 @@ class NetworkManager {
             return nil
         }
     }
-
 }
 
