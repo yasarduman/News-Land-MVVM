@@ -12,8 +12,9 @@ class HomeTableViewCell: UITableViewCell {
     //MARK: - Variables
     static let reuseID = "HomeTableViewCell"
     
+    var news : News? = nil
     
-    //MARK: - UI Elements
+    //MARK: - UI Elementsw
     lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .secondarySystemBackground
@@ -29,7 +30,6 @@ class HomeTableViewCell: UITableViewCell {
     
     lazy var newsImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "robot")
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.layer.maskedCorners = [
@@ -48,11 +48,11 @@ class HomeTableViewCell: UITableViewCell {
     }()
     
     lazy var titleLabel: UILabel = {
-        let label = NewsTitleLabel(textAlignment: .natural, fontSize: 18)
+        let label = NewsTitleLabel(textAlignment: .natural, fontSize: 16)
         label.textColor = .label
-        label.text = "\"Delete\" on Netflix: A phone That Makes People Disappear"
+        
         label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         return label
     }()
     
@@ -85,7 +85,7 @@ class HomeTableViewCell: UITableViewCell {
                                                    left: 10,
                                                    bottom: 10,
                                                    right: 10))
-
+        
     }
     
     private func configureImageView() {
@@ -97,26 +97,25 @@ class HomeTableViewCell: UITableViewCell {
     }
     
     private func configureLabels() {
-        containerView.addSubview(timeSincePostLabel)
-        timeSincePostLabel.anchor(leading: newsImageView.trailingAnchor,
-                                  bottom: containerView.safeAreaLayoutGuide.bottomAnchor,
-                                  trailing: containerView.safeAreaLayoutGuide.trailingAnchor,
-                                  padding: UIEdgeInsets(top: 0,
-                                                        left: 10,
-                                                        bottom: 5,
-                                                        right: 0))
+        containerView.addSubviewsExt(titleLabel,timeSincePostLabel)
         
-        containerView.addSubview(titleLabel)
-        titleLabel.anchor(leading: timeSincePostLabel.leadingAnchor,
-                          bottom: timeSincePostLabel.safeAreaLayoutGuide.topAnchor,
-                          trailing: containerView.safeAreaLayoutGuide.trailingAnchor,
-                          padding: UIEdgeInsets(top: 0,
-                                                left: 0,
-                                                bottom: 10,
-                                                right: 5))
+        titleLabel.anchor(top: containerView.topAnchor,
+                          leading: newsImageView.trailingAnchor,
+                          trailing: containerView.trailingAnchor,
+                          padding: UIEdgeInsets(top: 10,
+                                                left: 10,
+                                                bottom: 0,
+                                                right: 10))
+        
+        timeSincePostLabel.anchor(leading: titleLabel.leadingAnchor,
+                                  bottom: containerView.bottomAnchor,
+                                  trailing: titleLabel.trailingAnchor,
+                                  padding: UIEdgeInsets(top: 0,
+                                                        left: 0,
+                                                        bottom: 10,
+                                                        right: 0))
     }
-    
-    
+
     
 }
 

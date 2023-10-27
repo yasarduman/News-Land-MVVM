@@ -22,18 +22,19 @@ class NewsCarouselViewCell: UICollectionViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font =  .systemFont(ofSize: 18, weight: .bold)
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.text = "These robot hands can be controlled from anywhere in the world"
         return label
     }()
     
     lazy var categoryLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = NewsColor.purple1
+        label.font =  .systemFont(ofSize: 20, weight: .bold)
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 1
-        label.text = "Technology"
+        label.text = "Kategori"
         return label
     }()
     
@@ -41,7 +42,7 @@ class NewsCarouselViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         addSubview(imageView)
-        imageView.image = UIImage(named: "robot")!
+        imageView.image = UIImage(systemName: "x.circle")
         imageView.anchor(top: topAnchor,
                          leading: leadingAnchor,
                          bottom: bottomAnchor,
@@ -76,5 +77,5 @@ class NewsCarouselViewCell: UICollectionViewCell {
 }
 
 #Preview {
-    NewsCarouselViewCell()
+    UINavigationController(rootViewController: HomeVC())
 }

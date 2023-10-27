@@ -28,14 +28,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         print(hasLaunchedBefore)
         // Uygulama ilk kez açılıyorsa, onboarding ekranını göster
         if !hasLaunchedBefore {
-            let onboardingVC = OnboardingVC()
+            let onboardingVC = NewsTabBarController()
             onboardingVC.modalPresentationStyle = .fullScreen
             window?.rootViewController = onboardingVC
             
             UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
         } else {
-            let loginVC = LoginVC()
-            let nav = UINavigationController(rootViewController: loginVC)
+            let loginVC = NewsTabBarController()
+            let nav = loginVC
             nav.modalPresentationStyle = .fullScreen
             window?.rootViewController = nav
         }
