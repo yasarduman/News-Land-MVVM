@@ -32,15 +32,10 @@ class HomeVC: UIViewController {
         configureUI()
         view.backgroundColor = .systemBackground
     }
-    
-    
+
     //MARK: - Helper Functions
     private func configureUI() {
-  
         getNewsTopHeadLines()
-        
-        
-    
         configureNavigationBar()
         configureCarouselView()
         configureTableView()

@@ -7,15 +7,110 @@
 
 import UIKit
 
-class SearchVC: UIViewController {
-    private let searchController                  = UISearchController(searchResultsController: nil)
-    
+class SearchVC: UIViewController, UITableViewDelegate {
+    private let searchController    = UISearchController(searchResultsController: nil)
+    let tableView                   = UITableView()
+    var newsArr : [News] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
-        createSearchBar()
+        configureUI()
     }
+    
+    private func configureUI() {
+        getNewsTopHeadLines()
+        createSearchBar()
+        configureTableView()
+    }
+    
+    private func updateUI( news: [News]? = nil){
+        newsArr = news!
+        
+        tableView.reloadData()
+    }
+    
+    
+    private func configureTableView() {
+        view.addSubview(tableView)
+        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                         leading: view.safeAreaLayoutGuide.leadingAnchor,
+                         bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                         trailing: view.safeAreaLayoutGuide.trailingAnchor)
+        tableView.separatorStyle = .none
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reuseID)
+    }
+    // MARK: - Network
+    func getNewsTopHeadLines() {
+        Task{
+            do {
+                let getNewsResponse = try await NetworkManager.shared.getNews()
+                self.updateUI(news: getNewsResponse.articles)
+    
+            } catch {
+                if let newsError = error as? NewsError {
+                    print("Error Veri Çekerken" + newsError.rawValue)
+                }else {
+                    self.presentDefualtError()
+                }
+                
+                
+            }
+        }
+      
+    }
+    
+    
+    func getNewsSearch(searc: String) {
+        Task{
+            do {
+                let getNewsResponse = try await NetworkManager.shared.getNewsSearch(search: searc)
+                self.updateUI(news: getNewsResponse.articles)
+    
+            } catch {
+                if let newsError = error as? NewsError {
+                    print("Error Veri Çekerken" + newsError.rawValue)
+                }else {
+                    self.presentDefualtError()
+                }
+                
+                
+            }
+        }
+      
+    }
+    
 }
+// MARK: - TableView
+extension SearchVC: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return newsArr.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.reuseID,
+                                                 for: indexPath) as! HomeTableViewCell
+        cell.selectionStyle = .none
+        
+        let news = newsArr[indexPath.row]
+        
+        if let title = news.title {
+            cell.titleLabel.text = title
+        }
+        
+        if let imageURL = news.urlToImage {
+            Task {
+                cell.newsImageView.image = await NetworkManager.shared.downloadImage(from: imageURL)
+            }
+        }
+        return cell
+    }
+    
+}
+
 //MARK: - SearchBar Methods
 
 extension SearchVC: UISearchBarDelegate {
@@ -27,42 +122,15 @@ extension SearchVC: UISearchBarDelegate {
         searchController.searchBar.delegate = self
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // TODO: burda table Viewi Yenileme işlemi yapılacak txt e göre
-        print("Arama metni: \(searchText)")
-        
-       
-    }
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        
-//        
-//        guard let text = searchBar.text, !text.isEmpty else { return }
-//      
-//        APICaller.shared.search(with: text) { [weak self] result in
-//            switch result {
-//            case .success(let articles):
-//                self?.articles = articles
-//                
-//                self?.viewModels = articles.compactMap({
-//                    NewsTableViewCellViewModel(title: $0.title ?? "", subtitle: $0.description ?? "No Description", imageurl: URL(string: $0.urlToImage ?? ""))
-//                    
-//                    
-//                })
-//                DispatchQueue.main.async {
-//                    self?.tableView.reloadData()
-//                }
-//                
-//                
-//            case.failure(let error):
-//                print(error)
-//            
-//            }
-//            }
-//        
-//     
-//        
-//    }
+        //print("Arama metni: \(searchText)")
+        if !searchText.isEmpty {
+            getNewsSearch(searc: searchText)
+        } else {
+            getNewsTopHeadLines()
+        }
     
- 
+    }
+
 }
 
 #Preview{
