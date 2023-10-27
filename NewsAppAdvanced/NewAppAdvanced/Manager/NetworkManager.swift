@@ -10,10 +10,10 @@ class NetworkManager {
     
     // MARK: - Properties
     static let shared   = NetworkManager()
-    
+   // 21ac99ce70374ca2a3cdfbebeebd044c
     private let baseUrlString       = "https://newsapi.org/v2/"
     private let TopHeaedline        = "top-headlines?country=us"
-    private let API_KEY             = "&apiKey=774527d9f9134f4fbb4032bec7f77007"
+    private let API_KEY             = "&apiKey=21ac99ce70374ca2a3cdfbebeebd044c"
    // private let everythingNews      = "https://newsapi.org/v2/everything?q=tesla&apiKey=774527d9f9134f4fbb4032bec7f77007"
     let cache           = NSCache<NSString, UIImage>()
     let decoder = JSONDecoder()
@@ -47,7 +47,7 @@ class NetworkManager {
     
     // MARK: - Fetch News Category
     func getNewsCategoriy(categoryy: String = "sports") async throws -> NewsModel {
-        let endpoint = "https://newsapi.org/v2/top-headlines?country=us&category=\(categoryy)&apiKey=774527d9f9134f4fbb4032bec7f77007"
+        let endpoint = "https://newsapi.org/v2/top-headlines?country=us&category=\(categoryy)&apiKey=21ac99ce70374ca2a3cdfbebeebd044c"
         
         guard let url = URL(string: endpoint) else {
             throw NewsError.invalidUrl
@@ -68,7 +68,7 @@ class NetworkManager {
     
     // MARK: - Fetch News Category
     func getNewsSearch(search: String = "tesla") async throws -> NewsModel {
-        let endpoint = "https://newsapi.org/v2/everything?q=\(search)&apiKey=774527d9f9134f4fbb4032bec7f77007"
+        let endpoint = "https://newsapi.org/v2/everything?q=\(search)&apiKey=21ac99ce70374ca2a3cdfbebeebd044c"
         
         guard let url = URL(string: endpoint) else {
             throw NewsError.invalidUrl
