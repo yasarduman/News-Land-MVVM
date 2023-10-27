@@ -21,6 +21,8 @@ class NewsCarouselView: UIView {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(NewsCarouselViewCell.self,
                                 forCellWithReuseIdentifier: NewsCarouselViewCell.reuseID)
+            
+
         return collectionView
     }()
     

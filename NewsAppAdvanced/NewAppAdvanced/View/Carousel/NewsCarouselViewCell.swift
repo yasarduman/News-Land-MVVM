@@ -22,6 +22,7 @@ class NewsCarouselViewCell: UICollectionViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font =  .systemFont(ofSize: 18, weight: .bold)
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         return label
@@ -29,7 +30,8 @@ class NewsCarouselViewCell: UICollectionViewCell {
     
     lazy var categoryLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = NewsColor.purple1
+        label.font =  .systemFont(ofSize: 20, weight: .bold)
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 1
         label.text = "Kategori"
@@ -75,5 +77,5 @@ class NewsCarouselViewCell: UICollectionViewCell {
 }
 
 #Preview {
-    NewsCarouselViewCell()
+    UINavigationController(rootViewController: HomeVC())
 }
