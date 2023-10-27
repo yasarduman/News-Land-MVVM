@@ -7,7 +7,7 @@
 
 import UIKit
 class NetworkManager {
-    
+
     // MARK: - Properties
     static let shared   = NetworkManager()
    // 21ac99ce70374ca2a3cdfbebeebd044c

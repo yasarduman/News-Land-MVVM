@@ -7,11 +7,17 @@
 
 import UIKit
 
-class HomeVC: UIViewController {
+// MARK: - Protocols
+protocol NewsOutPut {
+    func saveDatas(value: [News])
+}
+
+// MARK: - Home View Controller
+class HomeVC: UIViewController  {
     
     //MARK: - UI Elements
     private lazy var showNotificationsButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: UIImage(systemName: "bell")?.withTintColor(.label, renderingMode: .alwaysOriginal),
+        let button = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease")?.withTintColor(.label, renderingMode: .alwaysOriginal),
                                      style: .done,
                                      target: self,
                                      action: #selector(showNotifications))
@@ -20,11 +26,12 @@ class HomeVC: UIViewController {
         return button
     }()
     
-    let carousel = NewsCarouselView()
+    let carousel                      = NewsCarouselView()
+    let tableView                     = UITableView()
     
-    let tableView = UITableView()
-    
-    var newsArr : [News] = []
+    // MARK: Properties
+    private let vm: INewsViewModel    = HomeVM()
+    private lazy var  newsArr: [News] = []
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -35,20 +42,23 @@ class HomeVC: UIViewController {
 
     //MARK: - Helper Functions
     private func configureUI() {
-        getNewsTopHeadLines()
         configureNavigationBar()
         configureCarouselView()
         configureTableView()
+     
+        vm.setDelegate(output: self)
+        vm.getNewsTopHeadLines()
     }
     
-    private func updateUI( news: [News]? = nil, categoryNews: [News]? = nil){
+    private func updateUI( news: [News]? = nil){
         newsArr = news!
         
-        carousel.news = categoryNews
+        carousel.news = news
         
         tableView.reloadData()
     }
     
+    // MARK: Navigation Bar Configuration
     private func configureNavigationBar() {
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
@@ -68,6 +78,7 @@ class HomeVC: UIViewController {
         navigationItem.rightBarButtonItem = showNotificationsButton
     }
     
+    // MARK: CarouselView Configuration
     private func configureCarouselView() {
         view.addSubview(carousel)
         carousel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
@@ -76,6 +87,7 @@ class HomeVC: UIViewController {
                         size: CGSize(width: .zero, height: 300))
     }
     
+    // MARK: TableView   Configuration
     private func configureTableView() {
         view.addSubview(tableView)
         tableView.anchor(top: carousel.bottomAnchor,
@@ -85,85 +97,58 @@ class HomeVC: UIViewController {
         tableView.separatorStyle = .none
         
         tableView.dataSource = self
-        tableView.delegate = self
+        
         
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reuseID)
     }
+    
     // MARK: - Menu Action
     private func addMenuItems() -> UIMenu {
         let menuItems = UIMenu(title: "", options: .displayInline, children: [
-            UIAction(title:"Business", image: UIImage(systemName: "house"), handler: { (_) in
-                self.getNewsCategory(category: "Business")
+            UIAction(title:"Business", image: UIImage(systemName: "rectangle.inset.filled.and.person.filled"), handler: { (_) in
+                self.vm.getNewsCategory(category: "Business")
             }),
-            UIAction(title:"Entertainment", image: UIImage(systemName: "house"), handler: { (_) in
-                self.getNewsCategory(category: "Entertainment")
+            UIAction(title:"Entertainment", image: UIImage(systemName: "gamecontroller"), handler: { (_) in
+                self.vm.getNewsCategory(category: "Entertainment")
             }),
-            UIAction(title:"General", image: UIImage(systemName: "house"), handler: { (_) in
-                self.getNewsCategory(category: "General")
+            UIAction(title:"General", image: UIImage(systemName: "globe"), handler: { (_) in
+                self.vm.getNewsCategory(category: "General")
             }),
-            UIAction(title:"Health", image: UIImage(systemName: "house"), handler: { (_) in
-                self.getNewsCategory(category: "Health")
+            UIAction(title:"Health", image: UIImage(systemName: "cross.case"), handler: { (_) in
+                self.vm.getNewsCategory(category: "Health")
             }),
-            UIAction(title:"Science", image: UIImage(systemName: "house"), handler: { (_) in
-                self.getNewsCategory(category: "Science")
+            UIAction(title:"Science", image: UIImage(systemName: "pill.circle"), handler: { (_) in
+                self.vm.getNewsCategory(category: "Science")
             }),
-            UIAction(title:"Sports", image: UIImage(systemName: "house"), handler: { (_) in
-                self.getNewsCategory(category: "Sports")
+            UIAction(title:"Sports", image: UIImage(systemName: "baseball"), handler: { (_) in
+                self.vm.getNewsCategory(category: "Sports")
             }),
-            UIAction(title:"Technology", image: UIImage(systemName: "house"), handler: { (_) in
-                self.getNewsCategory(category: "Technology")
+            UIAction(title:"Technology", image: UIImage(systemName: "laptopcomputer"), handler: { (_) in
+                self.vm.getNewsCategory(category: "Technology")
             }),
             
         ])
         return menuItems
     }
-    // MARK: - Network
-    func getNewsCategory(category: String) {
-        Task{
-            do {
-                
-                let getNewsResponseCategory = try await NetworkManager.shared.getNewsCategoriy(categoryy: category)
-                self.updateUI(news: getNewsResponseCategory.articles, categoryNews: getNewsResponseCategory.articles)
-    
-            } catch {
-                if let newsError = error as? NewsError {
-                    print("Error Veri Çekerken" + newsError.rawValue)
-                }else {
-                    self.presentDefualtError()
-                }
-                
-                
-            }
-        }
-      
-    }
-    
-    func getNewsTopHeadLines() {
-        Task{
-            do {
-                let getNewsResponse = try await NetworkManager.shared.getNews()
-                self.updateUI(news: getNewsResponse.articles, categoryNews: getNewsResponse.articles)
-    
-            } catch {
-                if let newsError = error as? NewsError {
-                    print("Error Veri Çekerken" + newsError.rawValue)
-                }else {
-                    self.presentDefualtError()
-                }
-                
-                
-            }
-        }
-      
-    }
-    
+
     // MARK: - Actions
     @objc func showNotifications() {
         print("bell tapped")
     }
+}
+// MARK: - NewsOutput Protocol Implementation
+extension HomeVC: NewsOutPut {
     
+    func saveDatas(value: [News]) {
+
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.updateUI(news: value)
+        }
+    }
 }
 
+// MARK: - UITableViewDataSource
 extension HomeVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -189,12 +174,6 @@ extension HomeVC: UITableViewDataSource {
 
         return cell
     }
-    
-    
-}
-
-
-extension HomeVC: UITableViewDelegate {
 }
 
 #Preview {
