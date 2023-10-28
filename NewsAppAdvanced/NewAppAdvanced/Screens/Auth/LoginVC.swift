@@ -152,7 +152,13 @@ class LoginVC: UIViewController {
             guard let self = self else { return }
 
             if success {
-                self.presentNewsAlert(title: "Alert!", message: "Succsses 🥳", buttonTitle: "Ok")
+                self.presentNewsAlert(title: "Alert!", message: "Entry Successful 🥳", buttonTitle: "Ok")
+                self.dismiss(animated: true) {
+                    // Daha sonra NewsTabBarController'ı sun
+                    let tabBar = NewsTabBarController()
+                    tabBar.modalPresentationStyle = .fullScreen
+                    self.present(tabBar, animated: true, completion: nil)
+                }   
             } else {
                 self.presentNewsAlert(title: "Alert!", message: error, buttonTitle: "Ok")
             }

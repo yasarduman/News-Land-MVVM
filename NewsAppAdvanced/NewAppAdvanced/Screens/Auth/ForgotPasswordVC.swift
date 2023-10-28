@@ -108,7 +108,8 @@ class ForgotPasswordVC: UIViewController {
             guard let self = self else { return }
 
             if success {
-                self.presentNewsAlert(title: "Alert!", message: "Succsses 🥳", buttonTitle: "Ok")
+                self.presentNewsAlert(title: "Alert!", message: "Password renewal request sent to your e-mail address 🥳", buttonTitle: "Ok")
+                self.navigationController?.popToRootViewController(animated: true)
             } else {
                 self.presentNewsAlert(title: "Alert!", message: error, buttonTitle: "Ok")
             }

@@ -11,7 +11,6 @@ class ProfileVC: UIViewController {
     let TopContenView          = UIView()
     let imageView              = UIImageView()
     let userName               = NewsTitleLabel(textAlignment: .center, fontSize: 15)
-    
     let segLabel               = NewsTitleLabel(textAlignment: .center, fontSize: 15)
     
     private let customTableVC = CustomTableVC()

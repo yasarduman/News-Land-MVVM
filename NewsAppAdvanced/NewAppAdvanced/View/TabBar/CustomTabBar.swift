@@ -2,18 +2,17 @@ import UIKit
 
 class CustomTabBar: UITabBar {
     private var shadowLayer: CAShapeLayer?
-
+   
     override func draw(_ rect: CGRect) {
         addShadow()
-        
+        updateBackgroundColor()
     }
 
     private func addShadow() {
         if shadowLayer == nil {
             shadowLayer = CAShapeLayer()
             shadowLayer?.path = UIBezierPath(roundedRect: bounds, cornerRadius: 10.0).cgPath
-            shadowLayer?.fillColor = UIColor.secondarySystemGroupedBackground.cgColor
-
+    
             shadowLayer?.shadowColor = UIColor.label.cgColor
             shadowLayer?.shadowPath = shadowLayer?.path
             shadowLayer?.shadowOffset = CGSize(width: 0, height: -1)
@@ -23,6 +22,11 @@ class CustomTabBar: UITabBar {
             layer.insertSublayer(shadowLayer!, at: 0)
         }
     }
+    
+    private func updateBackgroundColor() {
+        let darkMode = UserDefaults.standard.bool(forKey: "DarkMode")
+        shadowLayer?.fillColor = darkMode ?  NewsColor.TabarbgDark.cgColor : NewsColor.TabarbgWhite.cgColor
+     }
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         var sizeThatFits = super.sizeThatFits(size)

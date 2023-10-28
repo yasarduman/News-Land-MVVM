@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -21,24 +22,37 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
          // MARK: - DarkMode
          let isDarkModeOn = UserDefaults.standard.bool(forKey: "DarkMode")
          applyDarkMode(isDarkModeOn)
-        
+     
+      
+    
         // MARK: - onboardingVC
         let hasLaunchedBefore = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
-        UserDefaults.standard.set(false, forKey: "hasLaunchedBefore")
         print(hasLaunchedBefore)
         // Uygulama ilk kez açılıyorsa, onboarding ekranını göster
+        
         if !hasLaunchedBefore {
-            let onboardingVC = NewsTabBarController()
+            let onboardingVC = OnboardingVC()
             onboardingVC.modalPresentationStyle = .fullScreen
             window?.rootViewController = onboardingVC
             
             UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
         } else {
-            let loginVC = NewsTabBarController()
-            let nav = loginVC
+            let loginVC = LoginVC()
+            let nav = UINavigationController(rootViewController: loginVC)
             nav.modalPresentationStyle = .fullScreen
             window?.rootViewController = nav
         }
+        
+        
+        // MARK: - kullanıcı sürekli giriş yapmamsı için yapılan işlem kullanıcıyı hatırlama işlemi
+        let currentUser = Auth.auth().currentUser
+        print(currentUser == nil)
+        if currentUser != nil {
+            let TabBar = NewsTabBarController()
+            TabBar.modalPresentationStyle = .fullScreen
+            window?.rootViewController = TabBar
+        }
+        
         
          self.window?.makeKeyAndVisible()
     }
