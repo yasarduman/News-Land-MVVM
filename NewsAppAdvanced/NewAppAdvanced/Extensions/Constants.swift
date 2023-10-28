@@ -58,3 +58,29 @@ enum DeviceTypes {
  ])
 
  */
+
+
+//Mock News
+
+struct MockNews {
+    static let json = """
+{
+      "source": {
+        "id": null,
+        "name": "Lifehacker.com"
+      },
+      "author": "Jake Peterson",
+      "title": "You Can Now React to iMessages With Emojis and Stickers",
+      "description": "Not every text message needs a written response. If someone said something funny, you hit them with a “Haha” reaction. If you’re good with a proposed plan, reaction with a thumbs up sends the same message as, “Sounds good!”Read more...",
+      "url": "https://lifehacker.com/you-can-now-react-to-imessages-with-emojis-and-stickers-1850967753",
+      "urlToImage": "https://i.kinja-img.com/image/upload/c_fill,h_675,pg_1,q_80,w_1200/0720b38aef4d86d48321a600058f79d4.png",
+      "publishedAt": "2023-10-27T22:00:00Z",
+      "content": "Not every text message needs a written response. If someone said something funny, you hit them with a Haha reaction. If youre good with a proposed plan, reaction with a thumbs up sends the same messa… [+2583 chars]"
+    }
+""".data(using: .utf8)!
+    
+    static var mockData: News {
+        let news = try! JSONDecoder().decode(News.self, from: json)
+        return news
+    }
+}

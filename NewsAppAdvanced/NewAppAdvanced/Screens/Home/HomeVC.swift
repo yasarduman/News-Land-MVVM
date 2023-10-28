@@ -93,6 +93,7 @@ class HomeVC: UIViewController  {
                          trailing: view.safeAreaLayoutGuide.trailingAnchor)
         tableView.separatorStyle = .none
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reuseID)
     }
     
@@ -165,6 +166,14 @@ extension HomeVC: UITableViewDataSource {
         }
 
         return cell
+    }
+}
+
+extension HomeVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let news = newsArr[indexPath.row]
+        
+        navigationController?.pushViewController(DetailVC(news: news), animated: true)
     }
 }
 
