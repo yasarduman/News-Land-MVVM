@@ -104,6 +104,7 @@ extension SearchVC: UISearchBarDelegate {
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
     }
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //print("Arama metni: \(searchText)")
         if !searchText.isEmpty {

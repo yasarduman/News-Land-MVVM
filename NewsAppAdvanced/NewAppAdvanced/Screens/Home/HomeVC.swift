@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - Protocols
-protocol NewsOutPut {
+protocol HomeProtocol {
     func saveDatas(value: [News])
 }
 
@@ -22,7 +22,6 @@ class HomeVC: UIViewController  {
                                      target: self,
                                      action: #selector(showNotifications))
         button.menu = addMenuItems()
-            
         return button
     }()
     
@@ -30,7 +29,7 @@ class HomeVC: UIViewController  {
     let tableView                     = UITableView()
     
     // MARK: Properties
-    private let vm: INewsViewModel    = HomeVM()
+    private let vm = HomeVM()
     private lazy var  newsArr: [News] = []
     
     //MARK: - Lifecycle
@@ -45,16 +44,14 @@ class HomeVC: UIViewController  {
         configureNavigationBar()
         configureCarouselView()
         configureTableView()
-     
-        vm.setDelegate(output: self)
+        
+        vm.delegate = self
         vm.getNewsTopHeadLines()
     }
     
     private func updateUI( news: [News]? = nil){
         newsArr = news!
-        
         carousel.news = news
-        
         tableView.reloadData()
     }
     
@@ -95,10 +92,7 @@ class HomeVC: UIViewController  {
                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
                          trailing: view.safeAreaLayoutGuide.trailingAnchor)
         tableView.separatorStyle = .none
-        
         tableView.dataSource = self
-        
-        
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reuseID)
     }
     
@@ -136,14 +130,12 @@ class HomeVC: UIViewController  {
         print("bell tapped")
     }
 }
-// MARK: - NewsOutput Protocol Implementation
-extension HomeVC: NewsOutPut {
-    
+// MARK: - Home Protocol Implementation
+extension HomeVC: HomeProtocol {
     func saveDatas(value: [News]) {
-
         DispatchQueue.main.async {
-            self.tableView.reloadData()
             self.updateUI(news: value)
+            self.tableView.reloadData()
         }
     }
 }
