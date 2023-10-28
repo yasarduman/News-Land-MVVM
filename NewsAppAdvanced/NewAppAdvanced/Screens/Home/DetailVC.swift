@@ -10,8 +10,8 @@ import UIKit
 class DetailVC: UIViewController {
     //MARK: - Variables
     let news: News
-    
-    
+    lazy var bookMarkToggle: Bool? = true
+    lazy var  rightBarBookmarkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     //MARK: - UI Elements
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -19,11 +19,18 @@ class DetailVC: UIViewController {
     }()
     
     lazy var bookmarkButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: UIImage(systemName: "bookmark"),
-                                     style: .done,
-                                     target: self,
-                                     action: #selector(bookmarkButtonTapped))
-        return button
+        
+        let bookMark =  UIImage(systemName: bookMarkToggle! ? "bookmark" : "bookmark.fill")
+        rightBarBookmarkButton.setImage(bookMark, for: .normal)
+        rightBarBookmarkButton.layer.cornerRadius = 5
+        rightBarBookmarkButton.tintColor = NewsColor.purple1
+        rightBarBookmarkButton.backgroundColor = .secondarySystemBackground
+        
+        rightBarBookmarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
+        
+        let rightBarButton = UIBarButtonItem(customView: rightBarBookmarkButton)
+        navigationItem.rightBarButtonItem = rightBarButton
+        return rightBarButton
     }()
     
     lazy var dateLabel: NewsSecondaryTitleLabel = {
@@ -64,13 +71,14 @@ class DetailVC: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureUI()
     }
     
     
     //MARK: - Helper Functions
     func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         configureNavigationBar()
         configureImageView()
         configureTitleLabel()
@@ -91,7 +99,7 @@ class DetailVC: UIViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.tintColor = .label
         navigationItem.title = ""
         
         navigationItem.rightBarButtonItem = bookmarkButton
@@ -161,5 +169,9 @@ class DetailVC: UIViewController {
     //MARK: - @Actions
     @objc func bookmarkButtonTapped() {
         print("bookmarkButtonTapped")
+        bookMarkToggle?.toggle()
+        rightBarBookmarkButton.setImage(UIImage(systemName: bookMarkToggle! ? "bookmark" : "bookmark.fill"), for: .normal)
     }
 }
+
+
