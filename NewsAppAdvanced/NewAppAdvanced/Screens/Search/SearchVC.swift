@@ -31,7 +31,7 @@ class SearchVC: UIViewController, UITableViewDelegate {
     
     // MARK: - Helper Functions
     private func configureUI() {
-
+        view.backgroundColor = .systemBackground
         createSearchBar()
         configureTableView()
         
@@ -95,6 +95,8 @@ extension SearchVC: UITableViewDataSource {
         return cell
     }
 }
+
+
 
 //MARK: - SearchBar Methods
 

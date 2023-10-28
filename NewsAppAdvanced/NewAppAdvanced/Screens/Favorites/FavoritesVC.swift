@@ -17,6 +17,7 @@ class FavoritesVC: UIViewController {
     }
     
     private func configureUI() {
+        view.backgroundColor = .systemBackground
         configureNavigationBar()
         configureTableView()
     }
@@ -66,6 +67,23 @@ extension FavoritesVC: UITableViewDataSource {
                                                  for: indexPath) as! HomeTableViewCell
         cell.selectionStyle = .none
         return cell
+    }
+    
+    //Kullanıcı TabelView deki bir hücreyi sag kaydırınca tetiklenir
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        //silme Buttonu
+        let silAction = UIContextualAction(style: .destructive, title: "Sil"){
+            (contextualAction, view, boolValue) in
+            //print("\(self.ulkeler[indexPath.row]) yi sil")
+            
+            // Hücre Silme işlemi
+            //self.ulkeler.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+        }
+   
+        //oluşturulan actionlar TableView üzerine eklenir
+        return UISwipeActionsConfiguration(actions: [silAction])
     }
 
 

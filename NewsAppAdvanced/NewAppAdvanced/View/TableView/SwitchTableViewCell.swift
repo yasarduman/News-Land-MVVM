@@ -94,16 +94,7 @@ class SwitchTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        iconContainer.translatesAutoresizingMaskIntoConstraints = false
-        iconImageView.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-        mySwitch.translatesAutoresizingMaskIntoConstraints = false
-        
-        // UserDefaults veya başka bir ayar mekanizması ile Dark Mode durumunu kontrol edin
-   
-       
-        
+    
         mySwitch.sizeToFit()
         let mySwitchwidth: CGFloat = mySwitch.frame.size.width
         let mySwitchheight: CGFloat = mySwitch.frame.size.height

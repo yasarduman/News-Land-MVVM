@@ -7,6 +7,7 @@
 
 
 import UIKit
+import FirebaseAuth
 
 // MARK: - Section Data Structure
 struct Section {
@@ -88,7 +89,16 @@ class CustomTableVC : UIViewController , UITableViewDelegate, UITableViewDataSou
                 self.navigationController?.pushViewController(vc, animated: true)
             })),
             .staticCell(model: SettingsOption(title: "Log out", icon: UIImage(systemName: "rectangle.portrait.and.arrow.forward"), iconBackgrondColor: NewsColor.purple3, handler: {
-                // Handle Log Out option
+                do {
+                    try Auth.auth().signOut()
+                    let loginVC = LoginVC()
+                    let nav = UINavigationController(rootViewController: loginVC)
+                    nav.modalPresentationStyle = .fullScreen
+                    self.present(nav, animated: true, completion: nil)
+                    
+                } catch  {
+                    print(error.localizedDescription )
+                }
             })),
           
         ]))

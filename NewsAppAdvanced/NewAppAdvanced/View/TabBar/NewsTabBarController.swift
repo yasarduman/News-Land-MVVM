@@ -23,7 +23,7 @@ class NewsTabBarController: UITabBarController, UITabBarControllerDelegate {
         UITabBar.appearance().tintColor = NewsColor.purple1
        
           // Seçilmeyen öğelerin rengini gri yapın
-        UITabBar.appearance().unselectedItemTintColor = .label
+        UITabBar.appearance().unselectedItemTintColor = .systemGray
         
         viewControllers = [
             createHomeNC(),
