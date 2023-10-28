@@ -7,28 +7,44 @@
 
 import UIKit
 
+// MARK: - Protocols
+protocol SearchOutPut {
+    func saveDatas(value: [News])
+}
+
+// MARK: - Search View Controller
 class SearchVC: UIViewController, UITableViewDelegate {
-    private let searchController    = UISearchController(searchResultsController: nil)
-    let tableView                   = UITableView()
-    var newsArr : [News] = []
+    
+    // MARK: - UI Elements
+    private let searchController      = UISearchController(searchResultsController: nil)
+    let tableView                     = UITableView()
+    
+    // MARK: - Properties
+    private let vm: ISearchViewModel  = SearchVM()
+    private lazy var newsArr : [News] = []
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
     
+    // MARK: - Helper Functions
     private func configureUI() {
-        getNewsTopHeadLines()
+
         createSearchBar()
         configureTableView()
+        
+        vm.setDelegate(output: self)
+        vm.getNewsTopHeadLines()
     }
     
     private func updateUI( news: [News]? = nil){
         newsArr = news!
-        
         tableView.reloadData()
     }
     
-    
+    // MARK: - TableView Configure
     private func configureTableView() {
         view.addSubview(tableView)
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
@@ -42,47 +58,17 @@ class SearchVC: UIViewController, UITableViewDelegate {
         
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reuseID)
     }
-    // MARK: - Network
-    func getNewsTopHeadLines() {
-        Task{
-            do {
-                let getNewsResponse = try await NetworkManager.shared.getNews()
-                self.updateUI(news: getNewsResponse.articles)
-    
-            } catch {
-                if let newsError = error as? NewsError {
-                    print("Error Veri Çekerken" + newsError.rawValue)
-                }else {
-                    self.presentDefualtError()
-                }
-                
-                
-            }
-        }
-      
-    }
-    
-    
-    func getNewsSearch(searc: String) {
-        Task{
-            do {
-                let getNewsResponse = try await NetworkManager.shared.getNewsSearch(search: searc)
-                self.updateUI(news: getNewsResponse.articles)
-    
-            } catch {
-                if let newsError = error as? NewsError {
-                    print("Error Veri Çekerken" + newsError.rawValue)
-                }else {
-                    self.presentDefualtError()
-                }
-                
-                
-            }
-        }
-      
-    }
-    
 }
+// MARK: - Network VM Protocol
+extension SearchVC: SearchOutPut {
+    func saveDatas(value: [News]) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.updateUI( news: value)
+        }
+    }
+}
+
 // MARK: - TableView
 extension SearchVC: UITableViewDataSource {
     
@@ -103,34 +89,30 @@ extension SearchVC: UITableViewDataSource {
         
         if let imageURL = news.urlToImage {
             Task {
-                cell.newsImageView.image = await NetworkManager.shared.downloadImage(from: imageURL)
+               cell.newsImageView.image = await NetworkManager.shared.downloadImage(from: imageURL)
             }
         }
         return cell
     }
-    
 }
 
 //MARK: - SearchBar Methods
 
 extension SearchVC: UISearchBarDelegate {
-    
-    
+ 
     private func createSearchBar() {
-        
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
     }
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //print("Arama metni: \(searchText)")
         if !searchText.isEmpty {
-            getNewsSearch(searc: searchText)
+            self.vm.getNewsSearch(searchTextt: searchText)
         } else {
-            getNewsTopHeadLines()
+            self.vm.getNewsTopHeadLines()
         }
-    
     }
-
 }
 
 #Preview{

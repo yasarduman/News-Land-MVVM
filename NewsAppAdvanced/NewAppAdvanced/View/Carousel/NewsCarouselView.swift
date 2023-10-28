@@ -40,7 +40,9 @@ class NewsCarouselView: UIView {
     
     var news: [News]? = nil {
         willSet {
-            collectionView.reloadData()
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
             pageControl.numberOfPages = newValue!.count
         }
     }
