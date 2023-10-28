@@ -11,15 +11,14 @@ class DetailVC: UIViewController {
     //MARK: - Variables
     let news: News
     lazy var bookMarkToggle: Bool? = true
-    lazy var  rightBarBookmarkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     //MARK: - UI Elements
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
     
-    lazy var bookmarkButton: UIBarButtonItem = {
-        
+    lazy var bookmarkButton: UIButton = {
+        let rightBarBookmarkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         let bookMark =  UIImage(systemName: bookMarkToggle! ? "bookmark" : "bookmark.fill")
         rightBarBookmarkButton.setImage(bookMark, for: .normal)
         rightBarBookmarkButton.layer.cornerRadius = 5
@@ -27,10 +26,7 @@ class DetailVC: UIViewController {
         rightBarBookmarkButton.backgroundColor = .secondarySystemBackground
         
         rightBarBookmarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
-        
-        let rightBarButton = UIBarButtonItem(customView: rightBarBookmarkButton)
-        navigationItem.rightBarButtonItem = rightBarButton
-        return rightBarButton
+        return rightBarBookmarkButton
     }()
     
     lazy var dateLabel: NewsSecondaryTitleLabel = {
@@ -102,7 +98,8 @@ class DetailVC: UIViewController {
         navigationController?.navigationBar.tintColor = .label
         navigationItem.title = ""
         
-        navigationItem.rightBarButtonItem = bookmarkButton
+        let rightBarButton = UIBarButtonItem(customView: bookmarkButton)
+        navigationItem.rightBarButtonItem = rightBarButton
     }
     
     func configureImageView() {
@@ -170,7 +167,7 @@ class DetailVC: UIViewController {
     @objc func bookmarkButtonTapped() {
         print("bookmarkButtonTapped")
         bookMarkToggle?.toggle()
-        rightBarBookmarkButton.setImage(UIImage(systemName: bookMarkToggle! ? "bookmark" : "bookmark.fill"), for: .normal)
+        bookmarkButton.setImage(UIImage(systemName: bookMarkToggle! ? "bookmark" : "bookmark.fill"), for: .normal)
     }
 }
 
