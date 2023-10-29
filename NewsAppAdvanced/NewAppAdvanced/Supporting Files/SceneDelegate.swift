@@ -27,7 +27,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
         // MARK: - onboardingVC
         let hasLaunchedBefore = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
-        print(hasLaunchedBefore)
         // Uygulama ilk kez açılıyorsa, onboarding ekranını göster
         
         if !hasLaunchedBefore {
@@ -46,7 +45,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // MARK: - kullanıcı sürekli giriş yapmamsı için yapılan işlem kullanıcıyı hatırlama işlemi
         let currentUser = Auth.auth().currentUser
-        print(currentUser == nil)
         if currentUser != nil {
             let TabBar = NewsTabBarController()
             TabBar.modalPresentationStyle = .fullScreen

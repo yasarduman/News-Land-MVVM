@@ -15,9 +15,9 @@ class DetailVM {
     func addToFavorites(news: News, completion: @escaping (Bool) -> Void) {
         
         let data = [
-            "id" : news.url!.hash.description,
             "title" : news.title,
-            "descripton" : news.description,
+            "description" : news.description,
+            "url" : news.url,
             "urlToImage" : news.urlToImage,
             "publishedAt" : news.publishedAt,
         ] as [String : Any]
@@ -66,7 +66,6 @@ class DetailVM {
                 }
                 
                 if let snapshot = snapshot {
-                    print(snapshot.exists)
                     completion(snapshot.exists)
                 }
             }

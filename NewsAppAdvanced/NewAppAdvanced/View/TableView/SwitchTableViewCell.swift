@@ -57,7 +57,6 @@ class SwitchTableViewCell: UITableViewCell {
     
     @objc func darkModeSwitchValueChanged(_ sender: UISwitch) {
         let isDarkModeOn = sender.isOn
-        print(sender.isOn)
        
 
         if isDarkModeOn {
