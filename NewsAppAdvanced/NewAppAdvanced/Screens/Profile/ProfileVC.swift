@@ -8,12 +8,26 @@
 import UIKit
 
 class ProfileVC: UIViewController {
+    //MARK: - Variables
+    let vm: ProfileVM
+    
     let TopContenView          = UIView()
     let imageView              = UIImageView()
     let userName               = NewsTitleLabel(textAlignment: .center, fontSize: 15)
     let segLabel               = NewsTitleLabel(textAlignment: .center, fontSize: 15)
     
     private let customTableVC = CustomTableVC()
+    
+    
+    //MARK: - Initializers
+    init() {
+        self.vm = ProfileVM()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +59,9 @@ class ProfileVC: UIViewController {
         imageView.centerXInSuperview()
         imageView.centerYInSuperview()
         
-        userName.text = "Yaşar DUMAN"
+        vm.fetchUserName { userName in
+            self.userName.text = userName
+        }
         userName.anchor(top: imageView.bottomAnchor,
                         padding: .init(top: 20, left: 0, bottom: 0, right: 0)
         )

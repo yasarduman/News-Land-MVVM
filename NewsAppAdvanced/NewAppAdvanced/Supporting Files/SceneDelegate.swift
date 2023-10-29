@@ -44,13 +44,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         // MARK: - kullanıcı sürekli giriş yapmamsı için yapılan işlem kullanıcıyı hatırlama işlemi
-        let currentUser = Auth.auth().currentUser
-        if currentUser != nil {
+        if let currentUser = Auth.auth().currentUser {
             let TabBar = NewsTabBarController()
             TabBar.modalPresentationStyle = .fullScreen
             window?.rootViewController = TabBar
         }
-        
         
          self.window?.makeKeyAndVisible()
     }

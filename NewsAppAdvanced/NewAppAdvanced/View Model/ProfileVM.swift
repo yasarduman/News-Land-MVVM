@@ -6,31 +6,27 @@
 //
 
 import UIKit
+import FirebaseFirestore
+import FirebaseAuth
 
 // MARK: - ViewModel
 class ProfileVM {
-    // ViewModel, iş mantığını ve verileri yönetir.
-    var isDarkModeOn: Bool = false
-
-    func toggleDarkMode() {
-        isDarkModeOn.toggle()
-        // Dark Mode ayarlamalarını burada işleyin.
-    }
-
-    func changePassword() {
-        // Parola değiştirme işlemini burada işleyin.
-    }
-
-    func showHelp() {
-        // Yardım sayfasını açma işlemini burada işleyin.
-    }
-
-    func logout() {
-        // Çıkış işlemini burada işleyin.
+    let currentUserID = Auth.auth().currentUser!.uid
+    
+    func fetchUserName(completion: @escaping (String) -> Void) {
+        Firestore.firestore()
+            .collection("UsersInfo")
+            .document(currentUserID)
+            .getDocument { snapshot, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                if let snapshot = snapshot {
+                    if let data = snapshot.data() {
+                        let userName = data["userName"] as! String
+                        completion(userName)
+                    }
+                }
+            }
     }
 }
-
-
-
-
-

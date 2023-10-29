@@ -30,7 +30,6 @@ class AuthVM{
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
             if let error = error {
                 print(error.localizedDescription)
-                return
             } else {
                 guard let user = result?.user else {
                     print("registerdan donen kullanıcı yok")
