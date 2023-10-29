@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileVC: UIViewController {
+class ProfileVC: UIViewController, UIImagePickerControllerDelegate , UINavigationControllerDelegate {
     //MARK: - Variables
     let vm: ProfileVM
     
@@ -36,7 +36,9 @@ class ProfileVC: UIViewController {
         view.backgroundColor = .systemBackground
         configureTopContent()
         configureTableView()
+      
     }
+
     
     private func configureTopContent() {
         view.addSubview(TopContenView)
@@ -51,13 +53,25 @@ class ProfileVC: UIViewController {
                              size: .init(width: 0, height: 250)
         )
         
-        imageView.image = UIImage(named: "userName")
+        imageView.image = UIImage(systemName: "person.crop.circle.badge.plus")
+        
+        //image tıklana bilir hale getirdik
+        imageView.isUserInteractionEnabled = true
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(chooeseImage))
+        imageView.addGestureRecognizer(gestureRecognizer)
+        
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
         imageView.anchor(size: .init(width: 90, height: 90))
         
         imageView.centerXInSuperview()
         imageView.centerYInSuperview()
+        
+        vm.fetchUserPhoto { url in
+                Task {
+                    self.imageView.image = await NetworkManager.shared.downloadImage(from: url)
+                }
+        }
         
         vm.fetchUserName { userName in
             self.userName.text = userName
@@ -67,6 +81,19 @@ class ProfileVC: UIViewController {
         )
         userName.centerXInSuperview()
         
+    }
+ 
+    //image Func
+    @objc func chooeseImage() {
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.sourceType = .photoLibrary
+        present(pickerController, animated: true)
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        imageView.image = info[.originalImage] as? UIImage
+        vm.uploadUserPhoto(imageData: imageView.image!)
+        self.dismiss(animated: true)
     }
     
     private func configureTableView(){
@@ -83,3 +110,4 @@ class ProfileVC: UIViewController {
         
     }
 }
+

@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
 
 // MARK: - ViewModel
 class ProfileVM {
@@ -28,5 +29,34 @@ class ProfileVM {
                     }
                 }
             }
+    }
+    
+    func uploadUserPhoto(imageData: UIImage) {
+        let storageRefernce = Storage.storage().reference()
+        
+        //turn of image into data
+        let imageData = imageData.jpegData(compressionQuality: 0.8)
+        
+        guard imageData != nil else{
+            return
+        }
+        
+        let fileRef = storageRefernce.child("Medi/\(currentUserID).jpg")
+        
+        fileRef.putData(imageData!, metadata: nil)
+    }
+    
+    func fetchUserPhoto(completion: @escaping (String) -> Void) {
+        let storageRef = Storage.storage().reference()
+        
+        let fileRef = storageRef.child("Medi/\(currentUserID).jpg")
+        fileRef.downloadURL { url, error in
+            if error == nil {
+                let imageUrl = url?.absoluteString
+                print(imageUrl!)
+                completion(imageUrl!)
+            }
+        }
+       
     }
 }

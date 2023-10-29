@@ -64,6 +64,7 @@
 		83A104B72AEA95A000329B09 /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A1045B2AEA91AE00329B09 /* ForgotPasswordVC.swift */; };
 		83A104BA2AEAA5A200329B09 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A104B92AEAA5A200329B09 /* NetworkManager.swift */; };
 		83A104BE2AEAA6C900329B09 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A104BD2AEAA6C900329B09 /* NewsModel.swift */; };
+		83E7021E2AEE901B008BEBC4 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 83E7021D2AEE901B008BEBC4 /* FirebaseStorage */; };
 		83F2FC202AE04E1B00006EBE /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F2FC1F2AE04E1B00006EBE /* HomeVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -134,6 +135,7 @@
 				83A104A42AEA940500329B09 /* Lottie in Frameworks */,
 				8310149C2AEC6357001A4126 /* FirebaseAuth in Frameworks */,
 				83A104B42AEA947300329B09 /* FirebaseFirestore in Frameworks */,
+				83E7021E2AEE901B008BEBC4 /* FirebaseStorage in Frameworks */,
 				8310149E2AEC6357001A4126 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,13 +150,6 @@
 				582CC7D32AE6BFDE0061763C /* NewsCarouselViewCell.swift */,
 			);
 			path = Carousel;
-			sourceTree = "<group>";
-		};
-		58539FBE2AE140FA0015815B /* Cards */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Cards;
 			sourceTree = "<group>";
 		};
 		587927622AE93F1000A27E98 /* TabBar */ = {
@@ -375,7 +370,6 @@
 				83A104982AEA93BE00329B09 /* Labels */,
 				83A104912AEA939500329B09 /* TableView */,
 				587927622AE93F1000A27E98 /* TabBar */,
-				58539FBE2AE140FA0015815B /* Cards */,
 				833566DF2ADE95CC00825B84 /* Alert */,
 				833566E82ADE968200825B84 /* Buttons */,
 				838025D02ADFD1BB000AA41E /* TextField */,
@@ -432,6 +426,7 @@
 				83A104B32AEA947300329B09 /* FirebaseFirestore */,
 				8310149B2AEC6357001A4126 /* FirebaseAuth */,
 				8310149D2AEC6357001A4126 /* FirebaseFirestoreSwift */,
+				83E7021D2AEE901B008BEBC4 /* FirebaseStorage */,
 			);
 			productName = NewAppAdvanced;
 			productReference = 8339A9502ADC106B006000AE /* NewAppAdvanced.app */;
@@ -797,6 +792,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 83A104A52AEA945D00329B09 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		83E7021D2AEE901B008BEBC4 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 83A104A52AEA945D00329B09 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

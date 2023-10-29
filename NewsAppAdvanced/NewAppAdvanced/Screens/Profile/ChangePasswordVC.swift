@@ -20,7 +20,7 @@ class ChangePasswordVC: UIViewController {
         configureViewController()
         configureHeadLabel()
         configureTextField()
-        configureSignUp()
+        configureResetButton()
         
     }
     
@@ -40,38 +40,38 @@ class ChangePasswordVC: UIViewController {
     }
     
     private func configureTextField() {
-    
-     
-
+        
+        
+        
         passwordTextField.placeholder = "New Password"
         passwordTextField.anchor(top: HeadLabel.bottomAnchor,
-                              leading: view.leadingAnchor,
-                              trailing: view.trailingAnchor,
-                              padding: .init(top: 40, left: 20, bottom: 0, right: 20),
-                              size: .init(width: 0, height: 50)
-                              
+                                 leading: view.leadingAnchor,
+                                 trailing: view.trailingAnchor,
+                                 padding: .init(top: 40, left: 20, bottom: 0, right: 20),
+                                 size: .init(width: 0, height: 50)
+                                 
         )
         
         repasswordTextField.placeholder = "Confirm Password"
-           
+        
         repasswordTextField.anchor(top: passwordTextField.bottomAnchor,
-                              leading: view.leadingAnchor,
-                              trailing: view.trailingAnchor,
-                              padding: .init(top: 20, left: 20, bottom: 0, right: 20),
-                              size: .init(width: 0, height: 50)
-                              
+                                   leading: view.leadingAnchor,
+                                   trailing: view.trailingAnchor,
+                                   padding: .init(top: 20, left: 20, bottom: 0, right: 20),
+                                   size: .init(width: 0, height: 50)
+                                   
         )
-
+        
     }
     
-    private func configureSignUp(){
+    private func configureResetButton(){
         resetButton.configuration?.cornerStyle = .capsule
-
+        
         resetButton.anchor(top: repasswordTextField.bottomAnchor,
-                            leading: view.leadingAnchor,
-                            trailing: view.trailingAnchor,
-                            padding: .init(top: 20, left: 20, bottom: 0, right: 20),
-                            size: .init(width: 0, height: 50)
+                           leading: view.leadingAnchor,
+                           trailing: view.trailingAnchor,
+                           padding: .init(top: 20, left: 20, bottom: 0, right: 20),
+                           size: .init(width: 0, height: 50)
         )
         resetButton.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
     }
@@ -87,7 +87,7 @@ class ChangePasswordVC: UIViewController {
             presentNewsAlert(title: "Alert!", message: "Email and Password ?", buttonTitle: "Ok")
             return
         }
-      
+        
         
         guard password.isValidPassword(password: password) else {
             
@@ -115,7 +115,7 @@ class ChangePasswordVC: UIViewController {
                 presentNewsAlert(title: "Alert!", message: "Password and password repeat are not the same", buttonTitle: "Ok")
                 return
             }
-         
+            
             
             return
         }
@@ -124,14 +124,17 @@ class ChangePasswordVC: UIViewController {
             guard let self = self else { return }
             
             if success {
-                self.presentNewsAlert(title: "Alert!", message: "Succsses 🥳", buttonTitle: "Ok")
+                passwordTextField.text = ""
+                repasswordTextField.text = ""
+                self.presentNewsAlert(title: "Alert!", message: "Password change Successful 🥳", buttonTitle: "Ok")
+                
             } else {
                 self.presentNewsAlert(title: "Alert!", message: error, buttonTitle: "Ok")
             }
         }
         
-       
+        
     }
-
+    
     
 }

@@ -15,11 +15,11 @@ class DetailVM {
     func addToFavorites(news: News, completion: @escaping (Bool) -> Void) {
         
         let data = [
-            "title" : news.title,
-            "description" : news.description,
-            "url" : news.url,
-            "urlToImage" : news.urlToImage,
-            "publishedAt" : news.publishedAt,
+            "title" : news.title!,
+            "description" : news.description!,
+            "url" : news.url!,
+            "urlToImage" : news.urlToImage!,
+            "publishedAt" : news.publishedAt!,
         ] as [String : Any]
         
         Firestore.firestore()
