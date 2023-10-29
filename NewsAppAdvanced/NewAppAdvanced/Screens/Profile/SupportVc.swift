@@ -83,7 +83,3 @@ class SupportVc: UIViewController {
         user2.view.centerXInSuperview()
     }
 }
-
-#Preview{
-    SupportVc()
-}

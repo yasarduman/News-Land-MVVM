@@ -67,7 +67,3 @@ class ProfileVC: UIViewController {
         
     }
 }
-
-#Preview{
-    return ProfileVC()
-}

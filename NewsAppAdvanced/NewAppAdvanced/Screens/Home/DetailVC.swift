@@ -14,6 +14,9 @@ class DetailVC: UIViewController {
     //MARK: - UI Elements
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.layer.cornerRadius = 20
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -107,6 +110,7 @@ class DetailVC: UIViewController {
         imageView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                          leading: view.safeAreaLayoutGuide.leadingAnchor,
                          trailing: view.safeAreaLayoutGuide.trailingAnchor,
+                         padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10),
                          size: CGSize(width: .zero, height: 300))
         
         if let imageURL = news.urlToImage {

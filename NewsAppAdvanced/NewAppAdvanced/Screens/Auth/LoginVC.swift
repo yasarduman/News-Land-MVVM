@@ -182,9 +182,3 @@ class LoginVC: UIViewController {
 
     
 }
-
-
-#Preview{
-    return LoginVC()
-}
-

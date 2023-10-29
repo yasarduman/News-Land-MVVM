@@ -85,8 +85,3 @@ class NewsTabBarController: UITabBarController, UITabBarControllerDelegate {
         }
     
 }
-
-
-#Preview {
-    NewsTabBarController()
-}

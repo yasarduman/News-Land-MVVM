@@ -34,7 +34,3 @@ class CustomTabBar: UITabBar {
         return sizeThatFits
     }
 }
-
-#Preview {
-    NewsTabBarController()
-}

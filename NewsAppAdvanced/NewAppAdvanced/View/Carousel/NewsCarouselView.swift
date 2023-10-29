@@ -143,8 +143,3 @@ extension NewsCarouselView: UIScrollViewDelegate {
         pageControl.currentPage = currentPage
     }
 }
-
-
-#Preview {
-    UINavigationController(rootViewController: HomeVC())
-}

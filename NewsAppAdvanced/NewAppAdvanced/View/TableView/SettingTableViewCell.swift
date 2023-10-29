@@ -91,7 +91,3 @@ class SettingTableViewCell: UITableViewCell {
 
 
 }
-
-#Preview{
-    CustomTableVC()
-}

@@ -118,7 +118,3 @@ class HomeTableViewCell: UITableViewCell {
 
     
 }
-
-#Preview {
-    NewsTabBarController()
-}

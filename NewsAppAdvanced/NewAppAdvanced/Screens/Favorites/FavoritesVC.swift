@@ -92,7 +92,3 @@ extension FavoritesVC: UITableViewDataSource {
 extension FavoritesVC: UITableViewDelegate {
 
 }
-
-#Preview {
-    NewsTabBarController()
-}

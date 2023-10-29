@@ -116,7 +116,3 @@ extension SearchVC: UISearchBarDelegate {
         }
     }
 }
-
-#Preview{
-    NewsTabBarController()
-}

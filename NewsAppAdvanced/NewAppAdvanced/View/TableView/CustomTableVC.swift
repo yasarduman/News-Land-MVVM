@@ -159,8 +159,3 @@ class CustomTableVC : UIViewController , UITableViewDelegate, UITableViewDataSou
     }
 
 }
-
-
-#Preview {
-    return CustomTableVC()
-}

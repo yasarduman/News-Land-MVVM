@@ -176,9 +176,3 @@ extension HomeVC: UITableViewDelegate {
         navigationController?.pushViewController(DetailVC(news: news), animated: true)
     }
 }
-
-#Preview {
-    NewsTabBarController()
-}
-
-

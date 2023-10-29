@@ -135,9 +135,3 @@ class ChangePasswordVC: UIViewController {
 
     
 }
-
-
-
-#Preview{
-    return ChangePasswordVC()
-}

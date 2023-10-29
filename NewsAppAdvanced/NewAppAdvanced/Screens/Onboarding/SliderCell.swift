@@ -70,7 +70,3 @@ class SliderCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-#Preview{
-    OnboardingVC()
-}

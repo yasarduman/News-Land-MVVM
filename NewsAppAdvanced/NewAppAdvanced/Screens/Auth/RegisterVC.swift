@@ -199,8 +199,3 @@ class RegisterVC: UIViewController {
     
 
 }
-
-
-#Preview{
-    RegisterVC()
-}

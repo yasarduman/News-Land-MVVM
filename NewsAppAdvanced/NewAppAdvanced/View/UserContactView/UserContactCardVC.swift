@@ -106,7 +106,3 @@ extension UserContactCardVC: MFMailComposeViewControllerDelegate {
         controller.dismiss(animated: true, completion: nil)
     }
 }
-
-#Preview{
-    UserContactCardVC(userName: "Yaşar Duman", userEmail: "01.yasarduman@gmail.com",userImageName: "userName")
-}

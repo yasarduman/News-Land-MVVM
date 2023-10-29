@@ -247,8 +247,3 @@ extension OnboardingVC : UICollectionViewDelegate, UICollectionViewDataSource {
         fromValue = curentIndex
     }
 }
-
-
-#Preview{
-    OnboardingVC()
-}
