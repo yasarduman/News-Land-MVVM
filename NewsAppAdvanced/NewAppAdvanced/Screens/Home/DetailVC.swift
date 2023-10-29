@@ -10,7 +10,14 @@ import UIKit
 class DetailVC: UIViewController {
     //MARK: - Variables
     let news: News
-    lazy var bookMarkToggle: Bool? = true
+    let vm: DetailVM
+    lazy var isFavorited = false {
+        willSet {
+            bookmarkButton.setImage(UIImage(systemName: newValue ? "bookmark.fill" : "bookmark"), for: .normal)
+        }
+    }
+    
+    
     //MARK: - UI Elements
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -22,8 +29,6 @@ class DetailVC: UIViewController {
     
     lazy var bookmarkButton: UIButton = {
         let rightBarBookmarkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        let bookMark =  UIImage(systemName: bookMarkToggle! ? "bookmark" : "bookmark.fill")
-        rightBarBookmarkButton.setImage(bookMark, for: .normal)
         rightBarBookmarkButton.layer.cornerRadius = 5
         rightBarBookmarkButton.tintColor = NewsColor.purple1
         rightBarBookmarkButton.backgroundColor = .secondarySystemBackground
@@ -59,6 +64,7 @@ class DetailVC: UIViewController {
     //MARK: - Initializers
     init(news: News) {
         self.news = news
+        self.vm = DetailVM()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -70,7 +76,9 @@ class DetailVC: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        vm.isFavorited(news: news) { bool in
+            self.isFavorited = bool
+        }
         configureUI()
     }
     
@@ -169,9 +177,11 @@ class DetailVC: UIViewController {
     
     //MARK: - @Actions
     @objc func bookmarkButtonTapped() {
-        print("bookmarkButtonTapped")
-        bookMarkToggle?.toggle()
-        bookmarkButton.setImage(UIImage(systemName: bookMarkToggle! ? "bookmark" : "bookmark.fill"), for: .normal)
+        isFavorited ? vm.removeFromFavorites(news: news,completion: { bool in
+            self.isFavorited = bool
+        }) : vm.addToFavorites(news: news,completion: { bool in
+            self.isFavorited = bool
+        })
     }
 }
 
