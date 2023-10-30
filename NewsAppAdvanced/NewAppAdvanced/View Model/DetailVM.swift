@@ -69,6 +69,6 @@ class DetailVM {
                     completion(snapshot.exists)
                 }
             }
-        
     }
+    
 }

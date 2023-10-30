@@ -28,7 +28,6 @@ class OnboardingVC: UIViewController {
         collection.dataSource = self
         collection.delegate = self
         collection.register(SliderCell.self, forCellWithReuseIdentifier: "cell")
-        collection.translatesAutoresizingMaskIntoConstraints = false
         collection.isPagingEnabled = true
         return collection
     }()
@@ -129,8 +128,6 @@ class OnboardingVC: UIViewController {
             pager.tag = tag
             pager.translatesAutoresizingMaskIntoConstraints = false
             pager.backgroundColor = .white
-            // pager.widthAnchor.constraint(equalToConstant: 10).isActive = true
-            //pager.heightAnchor.constraint(equalToConstant: 10).isActive = true
             pager.layer.cornerRadius = 5
             pager.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(scrollToSlide(sender: ))))
             self.pagers.append(pager)

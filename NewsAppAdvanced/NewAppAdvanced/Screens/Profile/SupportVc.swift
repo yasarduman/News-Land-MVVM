@@ -10,7 +10,8 @@ import UIKit
 class SupportVc: UIViewController {
     
     let imageView : UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "support")
         return imageView
     }()
@@ -31,8 +32,6 @@ class SupportVc: UIViewController {
     
     private func configureImageView(){
         view.addSubview(imageView)
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                          leading: view.leadingAnchor,
                          trailing: view.trailingAnchor,

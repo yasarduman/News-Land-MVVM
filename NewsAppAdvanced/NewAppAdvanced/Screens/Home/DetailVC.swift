@@ -11,11 +11,7 @@ class DetailVC: UIViewController {
     //MARK: - Variables
     let news: News
     let vm: DetailVM
-    lazy var isFavorited = false {
-        willSet {
-            bookmarkButton.setImage(UIImage(systemName: newValue ? "bookmark.fill" : "bookmark"), for: .normal)
-        }
-    }
+    lazy var isFavorited = false
     
     
     //MARK: - UI Elements
@@ -32,7 +28,6 @@ class DetailVC: UIViewController {
         rightBarBookmarkButton.layer.cornerRadius = 5
         rightBarBookmarkButton.tintColor = NewsColor.purple1
         rightBarBookmarkButton.backgroundColor = .secondarySystemBackground
-        
         rightBarBookmarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         return rightBarBookmarkButton
     }()
@@ -76,21 +71,27 @@ class DetailVC: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        vm.isFavorited(news: news) { bool in
-            self.isFavorited = bool
-        }
         configureUI()
     }
     
     
     //MARK: - Helper Functions
+    
     func configureUI() {
         view.backgroundColor = .systemBackground
         configureNavigationBar()
+        configureBookmarkButton()
         configureImageView()
         configureTitleLabel()
         configureDateLabel()
         configureDescriptonTextView()
+    }
+    
+    func configureBookmarkButton() {
+        vm.isFavorited(news: news) { bool in
+            self.isFavorited = bool
+            self.bookmarkButton.setImage(UIImage(systemName: bool ? "bookmark.fill" : "bookmark"), for: .normal)
+        }
     }
     
     func configureNavigationBar() {
@@ -179,11 +180,17 @@ class DetailVC: UIViewController {
     
     //MARK: - @Actions
     @objc func bookmarkButtonTapped() {
-        isFavorited ? vm.removeFromFavorites(news: news,completion: { bool in
-            self.isFavorited = bool
-        }) : vm.addToFavorites(news: news,completion: { bool in
-            self.isFavorited = bool
-        })
+        if isFavorited {
+            vm.removeFromFavorites(news: news) { bool in
+                self.isFavorited = bool
+                self.bookmarkButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+            }
+        } else {
+            vm.addToFavorites(news: news) { bool in
+                self.isFavorited = bool
+                self.bookmarkButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            }
+        }
     }
 }
 

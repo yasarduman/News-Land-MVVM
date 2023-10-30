@@ -8,11 +8,11 @@
 import UIKit
 
 class SettingTableViewCell: UITableViewCell {
-
+    
     static let identifier = "SettingTableViewCell"
     
     private let iconContainer: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.clipsToBounds = true
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
@@ -20,7 +20,7 @@ class SettingTableViewCell: UITableViewCell {
     }()
     
     private let iconImageView: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.tintColor = NewsColor.purple1
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -28,7 +28,7 @@ class SettingTableViewCell: UITableViewCell {
     
     
     private let label: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.numberOfLines = 1
         return label
     }()
@@ -50,18 +50,12 @@ class SettingTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        iconContainer.translatesAutoresizingMaskIntoConstraints = false
-        iconImageView.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-           
-        
         let size: CGFloat = contentView.frame.size.height - 12
         let imageSize: CGFloat = size/1.5
         
         iconContainer.anchor(leading: leadingAnchor,
                              padding: .init(top: 0, left: 15, bottom: 0, right: 0),
-                             size: .init(width: size, height: size)
-        )
+                             size: .init(width: size, height: size))
         iconContainer.centerYInSuperview()
         
         iconImageView.anchor(size: .init(width: imageSize, height: imageSize))
@@ -69,10 +63,9 @@ class SettingTableViewCell: UITableViewCell {
         iconImageView.centerYInSuperview()
         
         label.anchor(leading: iconContainer.trailingAnchor,
-                     padding: .init(top: 0, left: 20, bottom: 0, right: 0)
-        )
+                     padding: .init(top: 0, left: 20, bottom: 0, right: 0))
         label.centerYInSuperview()
-         
+        
         
     }
     
@@ -82,12 +75,12 @@ class SettingTableViewCell: UITableViewCell {
         label.text = nil
         iconContainer.backgroundColor = nil
     }
-   
+    
     public func configure(with model: SettingsOption){
         label.text = model.title
         iconImageView.image = model.icon
         iconContainer.backgroundColor = model.iconBackgrondColor
     }
-
-
+    
+    
 }

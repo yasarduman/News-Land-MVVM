@@ -21,8 +21,6 @@ class NewsCarouselView: UIView {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(NewsCarouselViewCell.self,
                                 forCellWithReuseIdentifier: NewsCarouselViewCell.reuseID)
-            
-
         return collectionView
     }()
     
@@ -54,7 +52,6 @@ class NewsCarouselView: UIView {
     //MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        translatesAutoresizingMaskIntoConstraints = false
         configureUI()
     }
     

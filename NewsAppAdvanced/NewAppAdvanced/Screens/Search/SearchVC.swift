@@ -89,7 +89,7 @@ extension SearchVC: UITableViewDataSource {
         
         if let imageURL = news.urlToImage {
             Task {
-               cell.newsImageView.image = await NetworkManager.shared.downloadImage(from: imageURL)
+                cell.newsImageView.image = await NetworkManager.shared.downloadImage(from: imageURL)
             }
         }
         return cell
@@ -101,12 +101,12 @@ extension SearchVC: UITableViewDataSource {
 //MARK: - SearchBar Methods
 
 extension SearchVC: UISearchBarDelegate {
- 
+    
     private func createSearchBar() {
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
     }
-
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //print("Arama metni: \(searchText)")
         if !searchText.isEmpty {

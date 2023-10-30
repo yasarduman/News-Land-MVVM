@@ -20,7 +20,6 @@ class HomeTableViewCell: UITableViewCell {
         view.backgroundColor = .secondarySystemBackground
         view.layer.cornerRadius = 20
         view.layer.shadowColor = UIColor.label.cgColor
-        /*self.traitCollection.userInterfaceStyle == .light ? UIColor.black.cgColor : UIColor.white.cgColor*/
         view.layer.shadowOffset = CGSize(width: 0, height: 0)
         view.layer.shadowOpacity = 0.7
         view.layer.shadowRadius = 4
