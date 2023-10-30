@@ -9,64 +9,90 @@ import UIKit
 import Lottie
 
 class SliderCell: UICollectionViewCell {
-    // MARK: - Views
-    lazy var titleLabel = UILabel()
-    lazy var textLabel = UILabel()
-    private var lottieView = LottieAnimationView()
+    
+    //MARK: - UI Elements
+    private lazy var lottieView: LottieAnimationView = {
+        let lottieView = LottieAnimationView()
+        lottieView.loopMode = .loop
+        lottieView.contentMode = .scaleAspectFit
+        return lottieView
+    }()
+    
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = NewsColor.goldTexxtColor
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 20, weight: .black)
+        return label
+    }()
+    
+    lazy var textLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = .white
+        label.numberOfLines = 0
+        return label
+    }()
+    
     
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(lottieView)
-        setSlider()
-    }
-    
-    // MARK: - UI Setup
-    private func setSlider(){
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(textLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.textAlignment = .center
-        textLabel.textAlignment = .center
-        
-        
-        titleLabel.textColor = NewsColor.goldTexxtColor
-        titleLabel.numberOfLines = 0
-           
-        textLabel.textColor = .white
-        textLabel.numberOfLines = 0
-        
-        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .black)
-      
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: lottieView.bottomAnchor, constant: 40),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            
-            textLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            textLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            textLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-        ])
-    }
-    
-    // MARK: - Animation Setup
-    func animationSetup(animationName: String){
-        contentView.addSubview(lottieView)
-        lottieView.translatesAutoresizingMaskIntoConstraints = false
-        lottieView.animation = LottieAnimation.named(animationName)
-        lottieView.loopMode = .loop
-        lottieView.contentMode = .scaleAspectFit
-        
-        lottieView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 160).isActive = true
-        lottieView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        lottieView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        lottieView.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        
-        lottieView.play()
+        configureUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    //MARK: - Helper Functions
+    private func configureUI() {
+        configureLottieView()
+        configureTitleLabel()
+        configureTextLabel()
+    }
+    
+    private func configureLottieView() {
+        contentView.addSubview(lottieView)
+        lottieView.anchor(top: contentView.topAnchor,
+                          leading: contentView.leadingAnchor,
+                          trailing: contentView.trailingAnchor,
+                          padding: UIEdgeInsets(top: 160,
+                                                left: 0,
+                                                bottom: 0,
+                                                right: 0),
+                          size: CGSize(width: .zero,
+                                       height: 300))
+    }
+    
+    private func configureTitleLabel() {
+        contentView.addSubview(titleLabel)
+        titleLabel.anchor(top: lottieView.bottomAnchor,
+                          leading: contentView.leadingAnchor,
+                          trailing: contentView.trailingAnchor,
+        padding: UIEdgeInsets(top: 40,
+                              left: 20,
+                              bottom: 0,
+                              right: 20))
+    }
+    
+    private func configureTextLabel() {
+        contentView.addSubview(textLabel)
+        textLabel.anchor(top: titleLabel.bottomAnchor,
+                          leading: contentView.leadingAnchor,
+                          trailing: contentView.trailingAnchor,
+        padding: UIEdgeInsets(top: 40,
+                              left: 20,
+                              bottom: 0,
+                              right: 20))
+    }
+    
+    
+    // MARK: - Animation Setup
+    func animationSetup(animationName: String){
+        lottieView.animation = LottieAnimation.named(animationName)
+        lottieView.play()
     }
 }
