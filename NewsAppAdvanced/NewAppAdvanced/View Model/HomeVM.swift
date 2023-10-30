@@ -16,12 +16,13 @@ class HomeVM  {
     func getNewsCategory(category: String) {
         Task{
             do {
-                let getNewsResponseCategory  = try await NetworkManager.shared.getNewsCategoriy(categoryy: category)
-                self.delegate?.saveDatas(value: getNewsResponseCategory.articles)
+                let getNewsResponseCategory  = try await NetworkManager.shared.getNewsCategory(category: category)
+                let filteredResponse = getNewsResponseCategory.articles.filter({ $0.title != nil && $0.description != nil && $0.urlToImage != nil })
+                self.delegate?.saveDatas(value: filteredResponse)
             } catch {
                 if let newsError = error as? NewsError {
                     print("Error Veri Çekerken" + newsError.rawValue)
-                }else {
+                } else {
                     print(error.localizedDescription)
                 }
             }
@@ -33,11 +34,12 @@ class HomeVM  {
         Task{
             do {
                 let getNewsResponse = try await NetworkManager.shared.getNews()
-                self.delegate?.saveDatas(value: getNewsResponse.articles)
+                let filteredResponse = getNewsResponse.articles.filter({ $0.title != nil && $0.description != nil && $0.urlToImage != nil })
+                self.delegate?.saveDatas(value: filteredResponse)
             } catch {
                 if let newsError = error as? NewsError {
                     print("Error Veri Çekerken" + newsError.rawValue)
-                }else {
+                } else {
                     print(error.localizedDescription)
                 }
             }

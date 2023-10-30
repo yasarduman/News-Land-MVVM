@@ -18,7 +18,7 @@ class SupportVc: UIViewController {
     private let headLabel = NewsTitleLabel(textAlignment: .center, fontSize: 25)
     private let secoLabel = NewsSecondaryTitleLabel(fontSize: 20)
     private let user1 =  UserContactCardVC(userName: "Yaşar Duman",userEmail: "01.yasarduman@gmail.com" ,userImageName: "userName")
-    private let user2 =  UserContactCardVC(userName: "Erislam Nurluyol", userEmail: "01.yasarduman@gmail.com" ,userImageName: "userName")
+    private let user2 =  UserContactCardVC(userName: "Erislam Nurluyol", userEmail: "nurluyolerislam@gmail.com" ,userImageName: "userName")
     
     override func viewDidLoad() {
         super.viewDidLoad()
