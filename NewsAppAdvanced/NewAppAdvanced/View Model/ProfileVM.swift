@@ -41,7 +41,7 @@ class ProfileVM {
             return
         }
         
-        let fileRef = storageRefernce.child("Medi/\(currentUserID).jpg")
+        let fileRef = storageRefernce.child("Media/\(currentUserID).jpg")
         
         fileRef.putData(imageData!, metadata: nil)
     }
@@ -49,11 +49,10 @@ class ProfileVM {
     func fetchUserPhoto(completion: @escaping (String) -> Void) {
         let storageRef = Storage.storage().reference()
         
-        let fileRef = storageRef.child("Medi/\(currentUserID).jpg")
+        let fileRef = storageRef.child("Media/\(currentUserID).jpg")
         fileRef.downloadURL { url, error in
             if error == nil {
                 let imageUrl = url?.absoluteString
-                print(imageUrl!)
                 completion(imageUrl!)
             }
         }

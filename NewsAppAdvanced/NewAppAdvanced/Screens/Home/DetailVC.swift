@@ -125,6 +125,8 @@ class DetailVC: UIViewController {
             Task {
                 imageView.image = await NetworkManager.shared.downloadImage(from: imageURL)
             }
+        } else {
+            imageView.image = UIImage(systemName: "x.circle")
         }
     }
     

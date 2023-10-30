@@ -105,6 +105,8 @@ extension FavoritesVC: UITableViewDataSource {
             Task {
                 cell.newsImageView.image = await NetworkManager.shared.downloadImage(from: imageURL)
             }
+        } else {
+            cell.newsImageView.image = UIImage(systemName: "x.circle")
         }
         
         return cell

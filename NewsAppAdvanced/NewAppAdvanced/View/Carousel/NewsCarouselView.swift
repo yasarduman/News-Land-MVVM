@@ -37,6 +37,7 @@ class NewsCarouselView: UIView {
     }()
     
     //MARK: - Variables
+    var delegate: HomeProtocol? = nil
     
     var news: [News]? = nil {
         willSet {
@@ -134,6 +135,12 @@ extension NewsCarouselView: UICollectionViewDataSource {
 extension NewsCarouselView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let news = news![indexPath.row]
+        
+        delegate?.pushDetail(value: news)
     }
 }
 

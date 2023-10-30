@@ -7,14 +7,14 @@
 
 import UIKit
 class NetworkManager {
-
+    
     // MARK: - Properties
     static let shared   = NetworkManager()
-   // 21ac99ce70374ca2a3cdfbebeebd044c
+    // 21ac99ce70374ca2a3cdfbebeebd044c
     private let baseUrlString       = "https://newsapi.org/v2/"
     private let TopHeaedline        = "top-headlines?country=us"
     private let API_KEY             = "&apiKey=21ac99ce70374ca2a3cdfbebeebd044c"
-   // private let everythingNews      = "https://newsapi.org/v2/everything?q=tesla&apiKey=774527d9f9134f4fbb4032bec7f77007"
+    // private let everythingNews      = "https://newsapi.org/v2/everything?q=tesla&apiKey=774527d9f9134f4fbb4032bec7f77007"
     let cache           = NSCache<NSString, UIImage>()
     let decoder = JSONDecoder()
     
@@ -46,8 +46,8 @@ class NetworkManager {
     }
     
     // MARK: - Fetch News Category
-    func getNewsCategoriy(categoryy: String = "sports") async throws -> NewsModel {
-        let endpoint = "https://newsapi.org/v2/top-headlines?country=us&category=\(categoryy)&apiKey=21ac99ce70374ca2a3cdfbebeebd044c"
+    func getNewsCategory(category: String) async throws -> NewsModel {
+        let endpoint = "https://newsapi.org/v2/top-headlines?country=us&category=\(category)&apiKey=21ac99ce70374ca2a3cdfbebeebd044c"
         
         guard let url = URL(string: endpoint) else {
             throw NewsError.invalidUrl

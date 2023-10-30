@@ -10,6 +10,8 @@ import UIKit
 // MARK: - Protocols
 protocol HomeProtocol {
     func saveDatas(value: [News])
+    
+    func pushDetail(value: News)
 }
 
 // MARK: - Home View Controller
@@ -17,20 +19,34 @@ class HomeVC: UIViewController  {
     
     //MARK: - UI Elements
     private lazy var showNotificationsButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease")?.withTintColor(.label, renderingMode: .alwaysOriginal),
-                                     style: .done,
-                                     target: self,
-                                     action: #selector(showNotifications))
-        button.menu = addMenuItems()
+        let button = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease")!,
+                                     menu: addMenuItems())
+        button.tintColor = .label
         return button
     }()
     
-    let carousel                      = NewsCarouselView()
-    let tableView                     = UITableView()
+    private lazy var carousel: NewsCarouselView = {
+        let carousel = NewsCarouselView()
+        carousel.delegate = self
+        return carousel
+    }()
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.separatorStyle = .none
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reuseID)
+        return tableView
+    }()
     
     // MARK: Properties
-    private let vm = HomeVM()
-    private lazy var  newsArr: [News] = []
+    private lazy var vm: HomeVM = {
+        let vm = HomeVM()
+        vm.delegate = self
+        return vm
+    }()
+    private lazy var newsArr: [News] = []
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -38,18 +54,16 @@ class HomeVC: UIViewController  {
         configureUI()
         view.backgroundColor = .systemBackground
     }
-
+    
     //MARK: - Helper Functions
     private func configureUI() {
         configureNavigationBar()
         configureCarouselView()
         configureTableView()
-        
-        vm.delegate = self
         vm.getNewsTopHeadLines()
     }
     
-    private func updateUI( news: [News]? = nil){
+    private func updateUI(news: [News]? = nil){
         newsArr = news!
         carousel.news = news
         tableView.reloadData()
@@ -91,44 +105,33 @@ class HomeVC: UIViewController  {
                          leading: view.safeAreaLayoutGuide.leadingAnchor,
                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
                          trailing: view.safeAreaLayoutGuide.trailingAnchor)
-        tableView.separatorStyle = .none
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reuseID)
     }
     
     // MARK: - Menu Action
     private func addMenuItems() -> UIMenu {
-        let menuItems = UIMenu(title: "", options: .displayInline, children: [
-            UIAction(title:"Business", image: UIImage(systemName: "rectangle.inset.filled.and.person.filled"), handler: { (_) in
-                self.vm.getNewsCategory(category: "Business")
-            }),
-            UIAction(title:"Entertainment", image: UIImage(systemName: "gamecontroller"), handler: { (_) in
-                self.vm.getNewsCategory(category: "Entertainment")
-            }),
-            UIAction(title:"General", image: UIImage(systemName: "globe"), handler: { (_) in
+        return UIMenu(title: "Categories", options: .displayInline, children: [
+            UIAction(title:"General", image: UIImage(systemName: "globe")) { _ in
                 self.vm.getNewsCategory(category: "General")
-            }),
-            UIAction(title:"Health", image: UIImage(systemName: "cross.case"), handler: { (_) in
+            },
+            UIAction(title:"Business", image: UIImage(systemName: "dollarsign")) { _ in
+                self.vm.getNewsCategory(category: "Business")
+            },
+            UIAction(title:"Entertainment", image: UIImage(systemName: "gamecontroller")) { _ in
+                self.vm.getNewsCategory(category: "Entertainment")
+            },
+            UIAction(title:"Health", image: UIImage(systemName: "cross.case")) { _ in
                 self.vm.getNewsCategory(category: "Health")
-            }),
-            UIAction(title:"Science", image: UIImage(systemName: "pill.circle"), handler: { (_) in
+            },
+            UIAction(title:"Science", image: UIImage(systemName: "pill.circle")) { _ in
                 self.vm.getNewsCategory(category: "Science")
-            }),
-            UIAction(title:"Sports", image: UIImage(systemName: "baseball"), handler: { (_) in
+            },
+            UIAction(title:"Sports", image: UIImage(systemName: "baseball")) { _ in
                 self.vm.getNewsCategory(category: "Sports")
-            }),
-            UIAction(title:"Technology", image: UIImage(systemName: "laptopcomputer"), handler: { (_) in
+            },
+            UIAction(title:"Technology", image: UIImage(systemName: "laptopcomputer")) { _ in
                 self.vm.getNewsCategory(category: "Technology")
-            }),
-            
+            }
         ])
-        return menuItems
-    }
-
-    // MARK: - Actions
-    @objc func showNotifications() {
-        print("bell tapped")
     }
 }
 // MARK: - Home Protocol Implementation
@@ -138,6 +141,10 @@ extension HomeVC: HomeProtocol {
             self.updateUI(news: value)
             self.tableView.reloadData()
         }
+    }
+    
+    func pushDetail(value: News) {
+        navigationController?.pushViewController(DetailVC(news: value), animated: true)
     }
 }
 
@@ -163,8 +170,10 @@ extension HomeVC: UITableViewDataSource {
             Task {
                 cell.newsImageView.image = await NetworkManager.shared.downloadImage(from: imageURL)
             }
+        } else {
+            cell.newsImageView.image = UIImage(systemName: "x.circle")
         }
-
+        
         return cell
     }
 }
