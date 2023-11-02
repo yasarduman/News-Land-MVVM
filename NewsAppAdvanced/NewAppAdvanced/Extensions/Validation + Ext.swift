@@ -43,13 +43,5 @@ extension String {
         let result = LowerCaseTest.evaluate(with: value)
         return result
     }
-    
-    func containsSpecialCharacter(_ value: String) -> Bool{
-        let DigitsRegEx = ".*[$@$#!%*?&]+.*"
-        let DigitsTest  = NSPredicate(format: "SELF MATCHES %@", DigitsRegEx)
-        let result = DigitsTest.evaluate(with: value)
-        return result
-    }
 
-    
 }

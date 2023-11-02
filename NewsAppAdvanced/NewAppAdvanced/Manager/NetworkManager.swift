@@ -5,17 +5,21 @@
 //  Created by Yaşar Duman on 4.10.2023.
 //
 
+
 import UIKit
+
 class NetworkManager {
+    // Erislam Nurluyol Api Key 21ac99ce70374ca2a3cdfbebeebd044c
+    // Yaşar Duman Api Key 774527d9f9134f4fbb4032bec7f77007
     
     // MARK: - Properties
     static let shared   = NetworkManager()
-    // 21ac99ce70374ca2a3cdfbebeebd044c
-    private let baseUrlString       = "https://newsapi.org/v2/"
-    private let TopHeaedline        = "top-headlines?country=us"
-    private let API_KEY             = "&apiKey=21ac99ce70374ca2a3cdfbebeebd044c"
-    // private let everythingNews      = "https://newsapi.org/v2/everything?q=tesla&apiKey=774527d9f9134f4fbb4032bec7f77007"
-    let cache           = NSCache<NSString, UIImage>()
+    private let baseURL = "https://newsapi.org/v2/"
+    private let topHeadlinesEndPoint = "top-headlines?country=us"
+    private let categoryEndPoint = "&category="
+    private let searchEndPoint = "everything?q="
+    private let API_KEY = "&apiKey=774527d9f9134f4fbb4032bec7f77007"
+    let cache = NSCache<NSString, UIImage>()
     let decoder = JSONDecoder()
     
     // MARK: - Initializer
@@ -25,8 +29,8 @@ class NetworkManager {
     }
     
     // MARK: - Fetch News
-    func getNews() async throws -> NewsModel {
-        let endpoint =  baseUrlString + TopHeaedline + API_KEY
+    func getNews() async throws -> [News] {
+        let endpoint =  baseURL + topHeadlinesEndPoint + API_KEY
         
         guard let url = URL(string: endpoint) else {
             throw NewsError.invalidUrl
@@ -39,15 +43,17 @@ class NetworkManager {
         }
         
         do {
-            return try decoder.decode(NewsModel.self, from: data)
+            let response = try decoder.decode(NewsModel.self, from: data)
+            let filteredResponse = response.articles.filter({ $0.title != nil && $0.description != nil && $0.urlToImage != nil })
+            return filteredResponse
         } catch {
             throw NewsError.invalidData
         }
     }
     
     // MARK: - Fetch News Category
-    func getNewsCategory(category: String) async throws -> NewsModel {
-        let endpoint = "https://newsapi.org/v2/top-headlines?country=us&category=\(category)&apiKey=21ac99ce70374ca2a3cdfbebeebd044c"
+    func getNewsCategory(category: String) async throws -> [News] {
+        let endpoint =  baseURL + topHeadlinesEndPoint + categoryEndPoint + "\(category)" + API_KEY
         
         guard let url = URL(string: endpoint) else {
             throw NewsError.invalidUrl
@@ -60,15 +66,17 @@ class NetworkManager {
         }
         
         do {
-            return try decoder.decode(NewsModel.self, from: data)
+            let response = try decoder.decode(NewsModel.self, from: data)
+            let filteredResponse = response.articles.filter({ $0.title != nil && $0.description != nil && $0.urlToImage != nil })
+            return filteredResponse
         } catch {
             throw NewsError.invalidData
         }
     }
     
     // MARK: - Fetch News Category
-    func getNewsSearch(search: String = "tesla") async throws -> NewsModel {
-        let endpoint = "https://newsapi.org/v2/everything?q=\(search)&apiKey=21ac99ce70374ca2a3cdfbebeebd044c"
+    func getNewsSearch(search: String) async throws -> [News] {
+        let endpoint = baseURL + searchEndPoint + "\(search)" + API_KEY
         
         guard let url = URL(string: endpoint) else {
             throw NewsError.invalidUrl
@@ -81,7 +89,9 @@ class NetworkManager {
         }
         
         do {
-            return try decoder.decode(NewsModel.self, from: data)
+            let response = try decoder.decode(NewsModel.self, from: data)
+            let filteredResponse = response.articles.filter({ $0.title != nil && $0.description != nil && $0.urlToImage != nil })
+            return filteredResponse
         } catch {
             throw NewsError.invalidData
         }
@@ -105,4 +115,3 @@ class NetworkManager {
         }
     }
 }
-

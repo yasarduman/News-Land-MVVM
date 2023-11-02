@@ -16,9 +16,8 @@ class HomeVM  {
     func getNewsCategory(category: String) {
         Task{
             do {
-                let getNewsResponseCategory  = try await NetworkManager.shared.getNewsCategory(category: category)
-                let filteredResponse = getNewsResponseCategory.articles.filter({ $0.title != nil && $0.description != nil && $0.urlToImage != nil })
-                self.delegate?.saveDatas(value: filteredResponse)
+                let response  = try await NetworkManager.shared.getNewsCategory(category: category)
+                self.delegate?.saveDatas(value: response)
             } catch {
                 if let newsError = error as? NewsError {
                     print("Error Veri Çekerken" + newsError.rawValue)
@@ -33,9 +32,8 @@ class HomeVM  {
     func getNewsTopHeadLines() {
         Task{
             do {
-                let getNewsResponse = try await NetworkManager.shared.getNews()
-                let filteredResponse = getNewsResponse.articles.filter({ $0.title != nil && $0.description != nil && $0.urlToImage != nil })
-                self.delegate?.saveDatas(value: filteredResponse)
+                let response = try await NetworkManager.shared.getNews()
+                self.delegate?.saveDatas(value: response)
             } catch {
                 if let newsError = error as? NewsError {
                     print("Error Veri Çekerken" + newsError.rawValue)

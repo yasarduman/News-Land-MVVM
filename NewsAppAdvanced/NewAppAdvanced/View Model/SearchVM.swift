@@ -30,8 +30,8 @@ class SearchVM :ISearchViewModel {
     func getNewsTopHeadLines() {
         Task{
             do {
-                let getNewsResponse = try await NetworkManager.shared.getNews()
-                self.searchOutPut?.saveDatas(value: getNewsResponse.articles)
+                let response = try await NetworkManager.shared.getNews()
+                self.searchOutPut?.saveDatas(value: response)
             } catch {
                 if let newsError = error as? NewsError {
                     print("Error Veri Çekerken" + newsError.rawValue)
@@ -46,8 +46,8 @@ class SearchVM :ISearchViewModel {
     func getNewsSearch(searchTextt: String) {
         Task{
             do {
-                let getNewsResponseSearch = try await NetworkManager.shared.getNewsSearch(search: searchTextt)
-                self.searchOutPut?.saveDatas(value: getNewsResponseSearch.articles)
+                let response = try await NetworkManager.shared.getNewsSearch(search: searchTextt)
+                self.searchOutPut?.saveDatas(value: response)
             } catch {
                 if let newsError = error as? NewsError {
                     print("Error Veri Çekerken" + newsError.rawValue)

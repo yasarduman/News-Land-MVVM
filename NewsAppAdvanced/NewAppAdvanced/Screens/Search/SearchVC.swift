@@ -13,7 +13,7 @@ protocol SearchOutPut {
 }
 
 // MARK: - Search View Controller
-class SearchVC: UIViewController, UITableViewDelegate {
+class SearchVC: UIViewController {
     
     // MARK: - UI Elements
     private let searchController      = UISearchController(searchResultsController: nil)
@@ -21,7 +21,8 @@ class SearchVC: UIViewController, UITableViewDelegate {
     
     // MARK: - Properties
     private let vm: ISearchViewModel  = SearchVM()
-    private lazy var newsArr : [News] = []
+    private lazy var news : [News] = []
+    lazy var workItem = WorkItem()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -39,8 +40,8 @@ class SearchVC: UIViewController, UITableViewDelegate {
         vm.getNewsTopHeadLines()
     }
     
-    private func updateUI( news: [News]? = nil){
-        newsArr = news!
+    private func updateUI(news: [News]? = nil){
+        self.news = news!
         tableView.reloadData()
     }
     
@@ -73,7 +74,7 @@ extension SearchVC: SearchOutPut {
 extension SearchVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newsArr.count
+        return news.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,7 +82,7 @@ extension SearchVC: UITableViewDataSource {
                                                  for: indexPath) as! HomeTableViewCell
         cell.selectionStyle = .none
         
-        let news = newsArr[indexPath.row]
+        let news = news[indexPath.row]
         
         if let title = news.title {
             cell.titleLabel.text = title
@@ -96,23 +97,31 @@ extension SearchVC: UITableViewDataSource {
     }
 }
 
+extension SearchVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let news = news[indexPath.row]
+        
+        navigationController?.pushViewController(DetailVC(news: news), animated: true)
+    }
+}
 
 
 //MARK: - SearchBar Methods
 
 extension SearchVC: UISearchBarDelegate {
-    
+
     private func createSearchBar() {
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
     }
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //print("Arama metni: \(searchText)")
-        if !searchText.isEmpty {
-            self.vm.getNewsSearch(searchTextt: searchText)
-        } else {
-            self.vm.getNewsTopHeadLines()
+        workItem.perform(after: 0.5) {
+            if !searchText.isEmpty {
+                self.vm.getNewsSearch(searchTextt: searchText)
+            } else {
+                self.vm.getNewsTopHeadLines()
+            }
         }
+       
     }
 }
