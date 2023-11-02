@@ -14,6 +14,4 @@ class OnboardingVM {
         OnboardingItemModel(color: NewsColor.purple2, title: "Personalize and Explore", text: "Choose the topics that matter to you and create a personalized news feed. Exploring interesting content has never been easier.", animationName: "a2"),
         OnboardingItemModel(color: NewsColor.purple2, title: "Stay Informed", text: "Don't miss the latest updates. Stay informed about breaking news with instant notifications and always stay up-to-date.", animationName: "a3"),
     ]
-    
-    // Diğer gerekli işlevler ve özellikler buraya eklenebilir
 }

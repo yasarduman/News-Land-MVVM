@@ -9,8 +9,7 @@ import UIKit
 
 class ProfileVC: UIViewController, UIImagePickerControllerDelegate , UINavigationControllerDelegate {
     //MARK: - Variables
-    let vm: ProfileVM
-    
+    lazy var vm = ProfileVM()
     let TopContenView          = UIView()
     let imageView              = UIImageView()
     let userName               = NewsTitleLabel(textAlignment: .center, fontSize: 15)
@@ -18,10 +17,8 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate , UINavigatio
     
     private let customTableVC = CustomTableVC()
     
-    
     //MARK: - Initializers
     init() {
-        self.vm = ProfileVM()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -106,8 +103,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate , UINavigatio
         
         customTableVC.view.anchor(top: TopContenView.bottomAnchor,
                                   size: .init(width: custWith, height: custHeight)
-        )
-        
+        )        
     }
 }
 

@@ -10,7 +10,6 @@ import UIKit
 // MARK: - Protocols
 protocol HomeProtocol {
     func saveDatas(value: [News])
-    
     func pushDetail(value: News)
 }
 

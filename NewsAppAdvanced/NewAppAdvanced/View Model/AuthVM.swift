@@ -11,10 +11,8 @@ import FirebaseFirestore
 
 class AuthVM{
     // MARK: - Login
-    
     func login(email: String, password: String, completion: @escaping (Bool, String) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
-            
             
             if let error = error {
                 completion(false, error.localizedDescription)
@@ -23,7 +21,6 @@ class AuthVM{
             }
         }
     }
-    
     
     // MARK: - Register
     func register(userName: String, email: String, password: String, completion: @escaping (Bool, String) -> Void) {
@@ -54,8 +51,6 @@ class AuthVM{
         }
     }
     
-    
-    
     // MARK: - ForgotPassword
     func resetPassword(email: String, completion: @escaping (Bool, String) -> Void) {
         guard !email.isEmpty else {
@@ -74,7 +69,6 @@ class AuthVM{
         }
     }
     
-    
     // MARK: - Change Password
     func changePassword(password: String, completion: @escaping (Bool, String) -> Void) {
         guard !password.isEmpty else {
@@ -90,6 +84,5 @@ class AuthVM{
                 completion(true, "Şifreniz Güncellendi")
             }
         }
-        
     }
 }

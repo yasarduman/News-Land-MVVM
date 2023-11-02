@@ -149,7 +149,5 @@ extension UIView{
     /// A structure that holds Auto Layout constraints for anchoring views.
     struct AnchoredConstraints {
         var top, leading, bottom, trailing, width, height: NSLayoutConstraint?
-    }
-    
-    
+    }  
 }

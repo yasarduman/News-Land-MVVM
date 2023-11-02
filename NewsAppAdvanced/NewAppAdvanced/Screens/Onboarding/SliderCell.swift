@@ -46,7 +46,6 @@ class SliderCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     //MARK: - Helper Functions
     private func configureUI() {
         configureLottieView()

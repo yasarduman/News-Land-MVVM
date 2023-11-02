@@ -161,18 +161,15 @@ class RegisterVC: UIViewController {
                 presentNewsAlert(title: "Alert!", message: "Password must contain at least 1 uppercase character", buttonTitle: "Ok")
                 return
             }
-        
             
             guard password == rePassword else {
                 presentNewsAlert(title: "Alert!", message: "Password and password repeat are not the same", buttonTitle: "Ok")
                 return
             }
-       
-            
+    
         return
         }
         
-  
         authVM?.register(userName: userName, email: email, password: password) { [weak self] success, error in
             guard let self = self else { return }
 
@@ -188,14 +185,10 @@ class RegisterVC: UIViewController {
                 self.presentNewsAlert(title: "Alert!", message: error, buttonTitle: "Ok")
             }
         }
-        
     }
     
     @objc private func didTapSignIn() {
 
         self.navigationController?.popToRootViewController(animated: true)
     }
-    
-    
-
 }

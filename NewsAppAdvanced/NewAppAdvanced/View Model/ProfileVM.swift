@@ -56,6 +56,5 @@ class ProfileVM {
                 completion(imageUrl!)
             }
         }
-       
     }
 }

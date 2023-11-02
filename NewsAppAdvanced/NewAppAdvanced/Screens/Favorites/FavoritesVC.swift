@@ -15,7 +15,6 @@ class FavoritesVC: UIViewController {
     //MARK: - UI Elements
     let tableView = UITableView()
     
-    
     //MARK: - Initializers
     init() {
         self.vm = FavoritesVM()
@@ -26,7 +25,6 @@ class FavoritesVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +34,7 @@ class FavoritesVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         refreshUI()
     }
-    
-    
+        
     //MARK: - Helper Functions
     private func refreshUI() {
         vm.fetchFavorites { news in
@@ -82,7 +79,6 @@ class FavoritesVC: UIViewController {
         
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reuseID)
     }
-    
 }
 
 extension FavoritesVC: UITableViewDataSource {
@@ -127,8 +123,6 @@ extension FavoritesVC: UITableViewDataSource {
         //oluşturulan actionlar TableView üzerine eklenir
         return UISwipeActionsConfiguration(actions: [silAction])
     }
-
-
 }
 
 extension FavoritesVC: UITableViewDelegate {

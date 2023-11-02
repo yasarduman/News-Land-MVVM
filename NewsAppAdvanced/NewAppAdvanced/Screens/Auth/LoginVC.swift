@@ -163,9 +163,6 @@ class LoginVC: UIViewController {
                 self.presentNewsAlert(title: "Alert!", message: error, buttonTitle: "Ok")
             }
         }
-        
-        
-        
     }
     
  // MARK: - ACTİON

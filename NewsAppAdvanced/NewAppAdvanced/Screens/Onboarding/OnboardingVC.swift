@@ -80,7 +80,6 @@ class OnboardingVC: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // ViewModel'den verileri al
         sliderData = viewModel.sliderData
         setupCollection()
         setControll()
@@ -203,9 +202,6 @@ extension OnboardingVC : UICollectionViewDelegate, UICollectionViewDataSource {
         }
         return UICollectionViewCell()
     }
-    
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         currentSlide = indexPath.item

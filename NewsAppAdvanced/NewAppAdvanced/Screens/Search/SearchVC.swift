@@ -105,9 +105,7 @@ extension SearchVC: UITableViewDelegate {
     }
 }
 
-
 //MARK: - SearchBar Methods
-
 extension SearchVC: UISearchBarDelegate {
 
     private func createSearchBar() {
@@ -122,6 +120,5 @@ extension SearchVC: UISearchBarDelegate {
                 self.vm.getNewsTopHeadLines()
             }
         }
-       
     }
 }

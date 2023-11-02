@@ -113,7 +113,5 @@ class HomeTableViewCell: UITableViewCell {
                                                         left: 0,
                                                         bottom: 10,
                                                         right: 0))
-    }
-
-    
+    } 
 }

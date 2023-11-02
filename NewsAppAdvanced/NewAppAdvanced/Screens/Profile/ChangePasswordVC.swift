@@ -8,12 +8,14 @@
 import UIKit
 
 class ChangePasswordVC: UIViewController {
+    
     // MARK: - Properties
     private let HeadLabel            = NewsTitleLabel(textAlignment: .left, fontSize: 20)
     private let passwordTextField    = CustomTextField(fieldType: .password)
     private let repasswordTextField  = CustomTextField(fieldType: .password)
     private let resetButton          = NewsButton( bgColor:NewsColor.purple1 ,color: NewsColor.purple1, title: "Reset", fontSize: .big)
     private let authVM : AuthVM?     = AuthVM()
+    
     // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +23,6 @@ class ChangePasswordVC: UIViewController {
         configureHeadLabel()
         configureTextField()
         configureResetButton()
-        
     }
     
     func configureViewController() {
@@ -40,18 +41,13 @@ class ChangePasswordVC: UIViewController {
     }
     
     private func configureTextField() {
-        
-        
-        
         passwordTextField.placeholder = "New Password"
         passwordTextField.anchor(top: HeadLabel.bottomAnchor,
                                  leading: view.leadingAnchor,
                                  trailing: view.trailingAnchor,
                                  padding: .init(top: 40, left: 20, bottom: 0, right: 20),
                                  size: .init(width: 0, height: 50)
-                                 
         )
-        
         repasswordTextField.placeholder = "Confirm Password"
         
         repasswordTextField.anchor(top: passwordTextField.bottomAnchor,
@@ -61,7 +57,6 @@ class ChangePasswordVC: UIViewController {
                                    size: .init(width: 0, height: 50)
                                    
         )
-        
     }
     
     private func configureResetButton(){
@@ -79,15 +74,11 @@ class ChangePasswordVC: UIViewController {
     // MARK: - Action
     @objc private func didTapResetButton() {
         //Email & Password Validation
-        
-        
-        
         guard let password = passwordTextField.text,
               let rePassword = repasswordTextField.text else{
             presentNewsAlert(title: "Alert!", message: "Email and Password ?", buttonTitle: "Ok")
             return
         }
-        
         
         guard password.isValidPassword(password: password) else {
             
@@ -115,8 +106,6 @@ class ChangePasswordVC: UIViewController {
                 presentNewsAlert(title: "Alert!", message: "Password and password repeat are not the same", buttonTitle: "Ok")
                 return
             }
-            
-            
             return
         }
         
@@ -132,9 +121,5 @@ class ChangePasswordVC: UIViewController {
                 self.presentNewsAlert(title: "Alert!", message: error, buttonTitle: "Ok")
             }
         }
-        
-        
-    }
-    
-    
+    }  
 }

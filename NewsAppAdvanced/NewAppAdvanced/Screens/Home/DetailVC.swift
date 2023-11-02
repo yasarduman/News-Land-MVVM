@@ -73,10 +73,8 @@ class DetailVC: UIViewController {
         super.viewDidLoad()
         configureUI()
     }
-    
-    
+
     //MARK: - Helper Functions
-    
     func configureUI() {
         view.backgroundColor = .systemBackground
         configureNavigationBar()
@@ -177,7 +175,6 @@ class DetailVC: UIViewController {
         }
     }
     
-    
     //MARK: - @Actions
     @objc func bookmarkButtonTapped() {
         if isFavorited {
@@ -193,5 +190,3 @@ class DetailVC: UIViewController {
         }
     }
 }
-
-
