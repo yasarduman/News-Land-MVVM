@@ -9,14 +9,14 @@ import UIKit
 
 class ForgotPasswordVC: UIViewController {
     // MARK: - Properties
-    private let HeadLabel            = NewsTitleLabel(textAlignment: .left, fontSize: 20)
-    private let emailTextField       = CustomTextField(fieldType: .email)
-    private let forgotPasswordButton = NewsButton( bgColor:NewsColor.purple1 ,color: NewsColor.purple1, title: "Submit", fontSize: .big)
-    private let infoLabel            = NewsSecondaryTitleLabel(fontSize: 16)
-    private let signInButton         = NewsButton( bgColor:.clear ,color: .label, title: "Sign In.", fontSize: .small)
+    private lazy var HeadLabel            = NewsTitleLabel(textAlignment: .left, fontSize: 20)
+    private lazy var emailTextField       = CustomTextField(fieldType: .email)
+    private lazy var forgotPasswordButton = NewsButton( bgColor:NewsColor.purple1 ,color: NewsColor.purple1, title: "Submit", fontSize: .big)
+    private lazy var infoLabel            = NewsSecondaryTitleLabel(fontSize: 16)
+    private lazy var signInButton         = NewsButton( bgColor:.clear ,color: .label, title: "Sign In.", fontSize: .small)
     
-    private let stackView            = UIStackView()
-    private let authVM : AuthVM?     = AuthVM()
+     private let stackView            = UIStackView()
+     private let authVM : AuthVM?     = AuthVM()
     
     // MARK: - View Controller Lifecycle
     override func viewDidLoad() {

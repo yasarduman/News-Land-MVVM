@@ -10,17 +10,17 @@ import FirebaseAuth
 
 class RegisterVC: UIViewController {
     // MARK: - Properties
-    private let HeadLabel            = NewsTitleLabel(textAlignment: .left, fontSize: 20)
-    private let userNameTextField    = CustomTextField(fieldType: .username)
-    private let emailTextField       = CustomTextField(fieldType: .email)
-    private let passwordTextField    = CustomTextField(fieldType: .password)
-    private let repasswordTextField  = CustomTextField(fieldType: .password)
-    private let signUpButton         = NewsButton( bgColor:NewsColor.purple1 ,color: NewsColor.purple1, title: "Sign Up", fontSize: .big)
-    private let infoLabel            = NewsSecondaryTitleLabel(fontSize: 16)
-    private let signInButton         = NewsButton( bgColor:.clear ,color: .label, title: "Sign In.", fontSize: .small)
+    private lazy var HeadLabel            = NewsTitleLabel(textAlignment: .left, fontSize: 20)
+    private lazy var userNameTextField    = CustomTextField(fieldType: .username)
+    private lazy var emailTextField       = CustomTextField(fieldType: .email)
+    private lazy var passwordTextField    = CustomTextField(fieldType: .password)
+    private lazy var repasswordTextField  = CustomTextField(fieldType: .password)
+    private lazy var signUpButton         = NewsButton( bgColor:NewsColor.purple1 ,color: NewsColor.purple1, title: "Sign Up", fontSize: .big)
+    private lazy var infoLabel            = NewsSecondaryTitleLabel(fontSize: 16)
+    private lazy var signInButton         = NewsButton( bgColor:.clear ,color: .label, title: "Sign In.", fontSize: .small)
     
     private let stackView            = UIStackView()
-    private let authVM : AuthVM?     = AuthVM()
+    lazy var authVM : AuthVM?     = AuthVM()
     
     // MARK: - View Controller Lifecycle
     override func viewDidLoad() {

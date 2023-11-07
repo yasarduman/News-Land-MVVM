@@ -54,10 +54,8 @@ class CustomTableVC : UIViewController , UITableViewDelegate, UITableViewDataSou
     // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         setupTableView()
         configure()
-        
     }
     
     // MARK: - Configure
@@ -100,10 +98,7 @@ class CustomTableVC : UIViewController , UITableViewDelegate, UITableViewDataSou
                     print(error.localizedDescription )
                 }
             })),
-          
         ]))
-     
-        
     }
     
 
@@ -111,8 +106,6 @@ class CustomTableVC : UIViewController , UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return models[section].options.count
     }
-    
-   
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -134,9 +127,6 @@ class CustomTableVC : UIViewController , UITableViewDelegate, UITableViewDataSou
             cell.configure(with: model)
             return cell
         }
-     
-        
-       
     }
     
     // MARK: - Table View Delegate
@@ -157,5 +147,4 @@ class CustomTableVC : UIViewController , UITableViewDelegate, UITableViewDataSou
         // Return the desired row height
         return 60.0
     }
-
 }

@@ -13,7 +13,7 @@ class NewsTabBarController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         
         // Özelleştirilmiş tab bar sınıfını kullanarak tab bar'ı ayarlayın
-         let customTabBar = CustomTabBar()
+         lazy var customTabBar = CustomTabBar()
          self.setValue(customTabBar, forKey: "tabBar")
          
         // Tab bar arka plan rengini beyaz yapın

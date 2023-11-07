@@ -12,13 +12,13 @@ import Firebase
 
 class LoginVC: UIViewController {
     // MARK: - Properties
-    private let HeadLabel            = NewsTitleLabel(textAlignment: .left, fontSize: 20)
-    private let emailTextField       = CustomTextField(fieldType: .email)
-    private let passwordTextField    = CustomTextField(fieldType: .password)
-    private let signInButton         = NewsButton( bgColor:NewsColor.purple1 ,color: NewsColor.purple1, title: "Sign In", fontSize: .big)
-    private let infoLabel            = NewsSecondaryTitleLabel(fontSize: 16)
-    private let newUserButton        = NewsButton( bgColor:.clear ,color: .label, title: "Sign Up.", fontSize: .small)
-    private let forgotPasswordButton = NewsButton( bgColor:.clear ,color: NewsColor.purple1, title: "Forgot password?", fontSize: .small)
+    private lazy var HeadLabel            = NewsTitleLabel(textAlignment: .left, fontSize: 20)
+    private lazy var emailTextField       = CustomTextField(fieldType: .email)
+    private lazy var passwordTextField    = CustomTextField(fieldType: .password)
+    private lazy var signInButton         = NewsButton( bgColor:NewsColor.purple1 ,color: NewsColor.purple1, title: "Sign In", fontSize: .big)
+    private lazy var infoLabel            = NewsSecondaryTitleLabel(fontSize: 16)
+    private lazy var newUserButton        = NewsButton( bgColor:.clear ,color: .label, title: "Sign Up.", fontSize: .small)
+    private lazy var forgotPasswordButton = NewsButton( bgColor:.clear ,color: NewsColor.purple1, title: "Forgot password?", fontSize: .small)
     
     private let stackView            = UIStackView()
     private let authVM : AuthVM?     = AuthVM()

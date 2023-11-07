@@ -9,12 +9,12 @@ import UIKit
 import MessageUI
 
 class UserContactCardVC: UIViewController {
-    private let conteinerView = UIView()
-    private let userImage = UIImageView()
-    private let userName  = NewsTitleLabel(textAlignment: .left, fontSize: 20)
-    private let userMessage = NewsSecondaryTitleLabel(fontSize: 15)
-    private let sendImage = UIImageView()
-    private let mailComposer = MFMailComposeViewController()
+    private lazy var conteinerView = UIView()
+    private lazy var userImage = UIImageView()
+    private lazy var userName  = NewsTitleLabel(textAlignment: .left, fontSize: 20)
+    private lazy var userMessage = NewsSecondaryTitleLabel(fontSize: 15)
+    private lazy var sendImage = UIImageView()
+    private lazy var mailComposer = MFMailComposeViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -44,8 +44,7 @@ class UserContactCardVC: UIViewController {
         conteinerView.anchor(top: view.topAnchor,
                              leading: view.leadingAnchor,
                              bottom: view.bottomAnchor,
-                             trailing: view.trailingAnchor
-        )
+                             trailing: view.trailingAnchor)
        
         userImage.clipsToBounds = true
         userImage.layer.cornerRadius = 35

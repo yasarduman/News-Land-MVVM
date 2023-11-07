@@ -10,10 +10,10 @@ import UIKit
 class ChangePasswordVC: UIViewController {
     
     // MARK: - Properties
-    private let HeadLabel            = NewsTitleLabel(textAlignment: .left, fontSize: 20)
-    private let passwordTextField    = CustomTextField(fieldType: .password)
-    private let repasswordTextField  = CustomTextField(fieldType: .password)
-    private let resetButton          = NewsButton( bgColor:NewsColor.purple1 ,color: NewsColor.purple1, title: "Reset", fontSize: .big)
+    private lazy var HeadLabel            = NewsTitleLabel(textAlignment: .left, fontSize: 20)
+    private lazy var passwordTextField    = CustomTextField(fieldType: .password)
+    private lazy var repasswordTextField  = CustomTextField(fieldType: .password)
+    private lazy var resetButton          = NewsButton( bgColor:NewsColor.purple1 ,color: NewsColor.purple1, title: "Reset", fontSize: .big)
     private let authVM : AuthVM?     = AuthVM()
     
     // MARK: - View Controller Lifecycle

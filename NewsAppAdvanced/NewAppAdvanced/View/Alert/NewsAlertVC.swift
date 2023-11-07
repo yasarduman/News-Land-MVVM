@@ -10,10 +10,10 @@ import UIKit
 class NewsAlertVC: UIViewController {
     
     // MARK: - Properties
-    let containerView  = NewsAlertContainerView()
-    let titleLabel     = NewsTitleLabel(textAlignment: .center, fontSize: 20)
-    let messageLabel   = NewsBodyLabel(textAlignment: .center)
-    let actionButton   = NewsButton( bgColor:.systemPink ,color: .systemPink , title: "Ok", systemImageName: "checkmark.circle")
+    private lazy var containerView  = NewsAlertContainerView()
+    private lazy var titleLabel     = NewsTitleLabel(textAlignment: .center, fontSize: 20)
+    private lazy var messageLabel   = NewsBodyLabel(textAlignment: .center)
+    private lazy var actionButton   = NewsButton( bgColor:.systemPink ,color: .systemPink , title: "Ok", systemImageName: "checkmark.circle")
     
     var alertTitle: String?
     var message: String?

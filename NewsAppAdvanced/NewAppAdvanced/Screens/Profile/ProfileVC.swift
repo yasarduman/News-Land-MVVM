@@ -9,14 +9,14 @@ import UIKit
 
 class ProfileVC: UIViewController, UIImagePickerControllerDelegate , UINavigationControllerDelegate {
     //MARK: - Variables
-    lazy var vm = ProfileVM()
-    let TopContenView          = UIView()
-    let imageView              = UIImageView()
-    let userName               = NewsTitleLabel(textAlignment: .center, fontSize: 15)
-    let segLabel               = NewsTitleLabel(textAlignment: .center, fontSize: 15)
-    
+    private let vm = ProfileVM()
+    private lazy var TopContenView          = UIView()
+    private lazy var imageView              = UIImageView()
+    private lazy var userName               = NewsTitleLabel(textAlignment: .center, fontSize: 15)
+    private lazy var segLabel               = NewsTitleLabel(textAlignment: .center, fontSize: 15)
+   
     private let customTableVC = CustomTableVC()
-    
+   
     //MARK: - Initializers
     init() {
         super.init(nibName: nil, bundle: nil)
