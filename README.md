@@ -29,4 +29,3 @@ This app is built with the help of the following libraries and dependencies:
 
 - Firebase (version 10.16.0) 🔥
 - Lottie (version 4.3.3) 🎮
-  
