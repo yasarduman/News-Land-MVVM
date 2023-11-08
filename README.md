@@ -47,6 +47,18 @@ This app is built with the help of the following libraries and dependencies:
 | <img src="https://github.com/duman011/News-Land-App/assets/81991720/56deced8-792b-46ee-a6cc-9bdbfbcb8058" alt="Favorites" width="100%"/> | <img src="https://github.com/duman011/News-Land-App/assets/81991720/1faa63c6-7dad-4a95-bf4d-4f8b256fbeda" alt="UserProfile" width="100%"/> | <img src="https://github.com/duman011/News-Land-App/assets/81991720/30a35f58-77ed-41eb-89d0-d5163c72afba" alt="ResetPassword" width="100%"/> | <img src="https://github.com/duman011/News-Land-App/assets/81991720/cd834682-58ef-49bb-8413-65602c3054e1" alt="HelpAndSupport" width="100%"/> |
 
 
+## Video Preview 🎥                                                                      
+<div align="center">
+  <video src="https://github.com/duman011/News-Land-App/assets/81991720/1129c08f-e517-4598-9d7e-1fa516cb994c" width="50%"  />
+</div>
+
+## Contact Me 📬
+
+If you have any questions, encounter issues, or want to provide feedback, please feel free to reach out to me via email at [01.yasarduman@gmail.com](mailto:01.yasarduman@gmail.com)
+
+
+
+
 
 
 
